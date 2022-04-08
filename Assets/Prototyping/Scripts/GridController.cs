@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -18,10 +17,15 @@ namespace Prototyping.Scripts
         [SerializeField] private int tilesLimit;
         [SerializeField] private List<Tile> path;
         [SerializeField] private List<Vector3Int> tilesPositions;
-        
+
+        [SerializeField] private Vector3Int startPosition;
+        [SerializeField] private Vector3Int endPosition;
         private void Start()
         {
             path = new List<Tile>();
+            startPosition = new Vector3Int(-9, -1, 0);
+            endPosition = new Vector3Int(8, -1, 0);
+            
             UpdateAvailableTilesText();
         }
 
@@ -58,14 +62,19 @@ namespace Prototyping.Scripts
             if (!pathTileMap.GetTile(tileLocation)) return;
             
             var removedIndex = tilesPositions.FindIndex(position => position.Equals(tileLocation));
+
+            if (removedIndex < 0) return;
+
             var lastIndex = tilesPositions.Count - 1;
             var quantityToRemove = lastIndex - removedIndex;
+            
             for (var i = 0; i <= quantityToRemove; i++)
             {
                 pathTileMap.SetTile(tilesPositions[lastIndex-i], null);
                 tilesPositions.RemoveAt(lastIndex-i);
                 path.RemoveAt(lastIndex-i);
             }
+            
             UpdateAvailableTilesText();
         }
         
@@ -73,6 +82,7 @@ namespace Prototyping.Scripts
         {
             var updatedTilesCountTxt = $"Available tiles: {tilesLimit - path.Count}";
             tilesCountTxt.text = updatedTilesCountTxt;
+            
             startWaveBtn.interactable = IsPathCompleted();
         }
 
@@ -88,16 +98,13 @@ namespace Prototyping.Scripts
         private bool IsPathCompleted()
         {
             if (tilesPositions.Count == 0) return false;
-            
-            var startPosition = new Vector3Int(-9, -1, 0);
-            var endPosition = new Vector3Int(8, -1, 0);
 
             var firstTilePosition = tilesPositions.First();
             var lastTilePosition = tilesPositions.Last();
             
             return IsNeighbor(startPosition, firstTilePosition) && IsNeighbor(endPosition, lastTilePosition);
         }
-        
+
         private static bool IsNeighbor(Vector3Int referencePosition, Vector3Int evaluatedPosition)
         {
             var isHorizontalNeighbor = 
@@ -107,5 +114,6 @@ namespace Prototyping.Scripts
 
             return isHorizontalNeighbor || isVerticalNeighbor;
         }
+        
     }
 }

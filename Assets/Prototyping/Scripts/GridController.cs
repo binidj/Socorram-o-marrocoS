@@ -36,14 +36,12 @@ namespace Prototyping.Scripts
 
         private void SetTileAtMousePosition()
         {
-            if (path.Count >= tilesLimit) 
-                return;
+            if (path.Count >= tilesLimit || IsPathCompleted()) return;
             
             var mousePosition = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
             var tileLocation = pathTileMap.WorldToCell(mousePosition);
 
-            if (pathTileMap.GetTile(tileLocation) || !IsLastTileNeighbor(tileLocation))
-                return;
+            if (pathTileMap.GetTile(tileLocation) || !IsLastTileNeighbor(tileLocation)) return;
             
             pathTileMap.SetTile(tileLocation, tile);
             path.Add(pathTileMap.GetTile<Tile>(tileLocation));
@@ -57,8 +55,7 @@ namespace Prototyping.Scripts
             var mousePosition = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
             var tileLocation = pathTileMap.WorldToCell(mousePosition);
 
-            if (!pathTileMap.GetTile(tileLocation))
-                return;
+            if (!pathTileMap.GetTile(tileLocation)) return;
             
             var removedIndex = tilesPositions.FindIndex(position => position.Equals(tileLocation));
             var lastIndex = tilesPositions.Count - 1;

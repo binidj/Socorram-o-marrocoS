@@ -12,6 +12,7 @@ namespace Prototyping.Scripts
         [SerializeField] public Button startWaveBtn;
 
         [SerializeField] private Tilemap pathTileMap;
+        [SerializeField] private Tilemap obstaclesTileMap;
         [SerializeField] private Tile tile;
 
         [SerializeField] private int tilesLimit;
@@ -38,14 +39,24 @@ namespace Prototyping.Scripts
                 RemoveTileAtMousePosition();
         }
 
+        private bool CanPlaceTile(Vector3Int tileLocation)
+        {
+            if (pathTileMap.GetTile(tileLocation) == null && 
+                obstaclesTileMap.GetTile(tileLocation) == null &&
+                IsLastTileNeighbor(tileLocation))
+            {
+                return true;
+            }
+            return false;
+        }
         private void SetTileAtMousePosition()
         {
             if (path.Count >= tilesLimit || IsPathCompleted()) return;
             
-            var mousePosition = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
-            var tileLocation = pathTileMap.WorldToCell(mousePosition);
+            Vector3 mousePosition = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
+            Vector3Int tileLocation = pathTileMap.WorldToCell(mousePosition);
 
-            if (pathTileMap.GetTile(tileLocation) || !IsLastTileNeighbor(tileLocation)) return;
+            if (!CanPlaceTile(tileLocation)) return;
             
             pathTileMap.SetTile(tileLocation, tile);
             path.Add(pathTileMap.GetTile<Tile>(tileLocation));

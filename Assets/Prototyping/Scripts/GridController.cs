@@ -8,24 +8,30 @@ namespace Prototyping.Scripts
 {
     public class GridController : MonoBehaviour
     {
+        // TODO : Move UI code to UI class
         [SerializeField] private Text tilesCountTxt;
         [SerializeField] public Button startWaveBtn;
-
         [SerializeField] private Tilemap pathTileMap;
+        [SerializeField] private Tilemap obstaclesTileMap;
         [SerializeField] private Tile tile;
-
-        [SerializeField] private int tilesLimit;
-        [SerializeField] private List<Tile> path;
         [SerializeField] private List<Vector3Int> tilesPositions;
-
-        [SerializeField] private Vector3Int startPosition;
-        [SerializeField] private Vector3Int endPosition;
+        [SerializeField] private LevelConfig levelConfig;
+        private int tilesLimit;
+        private Vector3Int startPosition;
+        private Vector3Int endPosition;
+        private int PathSize
+        {
+            get { 
+                Debug.Assert(tilesPositions.Count != 0);
+                return tilesPositions.Count - 1; 
+            }
+        }
         private void Start()
         {
-            path = new List<Tile>();
-            startPosition = new Vector3Int(-9, -1, 0);
-            endPosition = new Vector3Int(8, -1, 0);
-            
+            startPosition = levelConfig.startPosition;
+            endPosition = levelConfig.endPosition;
+            tilesLimit = levelConfig.tilesLimit;
+            tilesPositions.Add(startPosition);
             UpdateAvailableTilesText();
         }
 
@@ -38,17 +44,26 @@ namespace Prototyping.Scripts
                 RemoveTileAtMousePosition();
         }
 
+        private bool CanPlaceTile(Vector3Int tileLocation)
+        {
+            if (pathTileMap.GetTile(tileLocation) == null && 
+                obstaclesTileMap.GetTile(tileLocation) == null &&
+                IsLastTileNeighbor(tileLocation))
+            {
+                return true;
+            }
+            return false;
+        }
         private void SetTileAtMousePosition()
         {
-            if (path.Count >= tilesLimit || IsPathCompleted()) return;
+            if (PathSize >= tilesLimit || IsPathCompleted()) return;
             
-            var mousePosition = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
-            var tileLocation = pathTileMap.WorldToCell(mousePosition);
+            Vector3 mousePosition = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
+            Vector3Int tileLocation = pathTileMap.WorldToCell(mousePosition);
 
-            if (pathTileMap.GetTile(tileLocation) || !IsLastTileNeighbor(tileLocation)) return;
+            if (!CanPlaceTile(tileLocation)) return;
             
             pathTileMap.SetTile(tileLocation, tile);
-            path.Add(pathTileMap.GetTile<Tile>(tileLocation));
             tilesPositions.Add(tileLocation);
             UpdateAvailableTilesText();
             
@@ -59,20 +74,19 @@ namespace Prototyping.Scripts
             var mousePosition = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
             var tileLocation = pathTileMap.WorldToCell(mousePosition);
 
-            if (!pathTileMap.GetTile(tileLocation)) return;
+            if (!pathTileMap.GetTile(tileLocation) || tileLocation == startPosition) return;
             
             var removedIndex = tilesPositions.FindIndex(position => position.Equals(tileLocation));
 
             if (removedIndex < 0) return;
 
-            var lastIndex = tilesPositions.Count - 1;
+            var lastIndex = PathSize;
             var quantityToRemove = lastIndex - removedIndex;
             
             for (var i = 0; i <= quantityToRemove; i++)
             {
                 pathTileMap.SetTile(tilesPositions[lastIndex-i], null);
                 tilesPositions.RemoveAt(lastIndex-i);
-                path.RemoveAt(lastIndex-i);
             }
             
             UpdateAvailableTilesText();
@@ -80,7 +94,7 @@ namespace Prototyping.Scripts
         
         private void UpdateAvailableTilesText()
         {
-            var updatedTilesCountTxt = $"Available tiles: {tilesLimit - path.Count}";
+            var updatedTilesCountTxt = $"Available tiles: {tilesLimit - PathSize}";
             tilesCountTxt.text = updatedTilesCountTxt;
             
             startWaveBtn.interactable = IsPathCompleted();
@@ -88,8 +102,6 @@ namespace Prototyping.Scripts
 
         private bool IsLastTileNeighbor(Vector3Int tileLocation)
         {
-            if (path.Count == 0) return true;
-
             var lastTilePosition = tilesPositions.Last();
 
             return IsNeighbor(lastTilePosition, tileLocation);
@@ -97,12 +109,11 @@ namespace Prototyping.Scripts
 
         private bool IsPathCompleted()
         {
-            if (tilesPositions.Count == 0) return false;
+            if (PathSize == 0) return false;
 
-            var firstTilePosition = tilesPositions.First();
             var lastTilePosition = tilesPositions.Last();
             
-            return IsNeighbor(startPosition, firstTilePosition) && IsNeighbor(endPosition, lastTilePosition);
+            return IsNeighbor(endPosition, lastTilePosition);
         }
 
         private static bool IsNeighbor(Vector3Int referencePosition, Vector3Int evaluatedPosition)

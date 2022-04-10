@@ -43,8 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd7208c826dcb4a46b1a1881f83cf44d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilesLimit: 10
-  tilesCount: 0
   tilesCountTxt: {fileID: 0}
+  startWaveBtn: {fileID: 0}
   pathTileMap: {fileID: 0}
-  tile: {fileID: 11400000, guid: d5bbeabdbd559cf46978bb8e5c53e880, type: 2}
+  obstaclesTileMap: {fileID: 0}
+  tile: {fileID: 11400000, guid: f118e39a6cc15e14599be9a4eaa8c0ed, type: 2}
+  tilesLimit: 10
+  path: []
+  tilesPositions: []
+  startPosition: {x: 0, y: 0, z: 0}
+  endPosition: {x: 0, y: 0, z: 0}

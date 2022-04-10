@@ -228,6 +228,10 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 592543944247806157, guid: bab760a92d8b699419705c70c8363a66, type: 3}
+      propertyPath: levelConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: d808c1ec61b7fb84f81908e4778ad404, type: 2}
+    - target: {fileID: 592543944247806157, guid: bab760a92d8b699419705c70c8363a66, type: 3}
       propertyPath: pathTileMap
       value: 
       objectReference: {fileID: 1595972393}
@@ -239,10 +243,6 @@ PrefabInstance:
       propertyPath: tilesCountTxt
       value: 
       objectReference: {fileID: 228630839}
-    - target: {fileID: 592543944247806157, guid: bab760a92d8b699419705c70c8363a66, type: 3}
-      propertyPath: path.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 592543944247806157, guid: bab760a92d8b699419705c70c8363a66, type: 3}
       propertyPath: obstaclesTileMap
       value: 

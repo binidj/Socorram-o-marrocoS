@@ -19,6 +19,7 @@ namespace Prototyping.Scripts
         private int tilesLimit;
         private Vector3Int startPosition;
         private Vector3Int endPosition;
+        private Vector3 worldOffset = new Vector3(0.5f, 0.5f, 0);
         private int PathSize
         {
             get { 
@@ -125,6 +126,16 @@ namespace Prototyping.Scripts
 
             return isHorizontalNeighbor || isVerticalNeighbor;
         }
-        
+
+        public List<Vector3> GetPathPositions()
+        {
+            List<Vector3> pathPositions = new List<Vector3>();
+            foreach (Vector3Int position in tilesPositions)
+            {
+                pathPositions.Add(pathTileMap.CellToWorld(position) + worldOffset);
+            }
+            pathPositions.Add(pathTileMap.CellToWorld(endPosition) + worldOffset);
+            return pathPositions;
+        }
     }
 }

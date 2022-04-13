@@ -24,7 +24,9 @@ public class EnemyMovement : MonoBehaviour
         {
             FollowNextTarget();
         }
-        
+    }
+
+    private void FixedUpdate() {
         float maxDistance = speed * Time.deltaTime;
 
         transform.position = Vector3.MoveTowards(transform.position, target, maxDistance);

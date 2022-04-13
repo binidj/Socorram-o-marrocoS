@@ -11,8 +11,10 @@ GameObject:
   - component: {fileID: 1799795297373335151}
   - component: {fileID: 2244425290628627779}
   - component: {fileID: -1505535347210704640}
+  - component: {fileID: 1831848916714817121}
   - component: {fileID: 5366621358758133208}
   - component: {fileID: 2635860428792788112}
+  - component: {fileID: 7356629399331363888}
   m_Layer: 0
   m_Name: BaseEnemy
   m_TagString: Untagged
@@ -97,6 +99,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f50fdec1609023542a7fd2ae11815f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyStats: {fileID: 11400000, guid: 9f35f9608df80b04988c16bc1701fdb9, type: 2}
+--- !u!114 &1831848916714817121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8861877568368221673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5426abe83b3070c45baaabf3b87e4f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyStats: {fileID: 11400000, guid: 9f35f9608df80b04988c16bc1701fdb9, type: 2}
 --- !u!50 &5366621358758133208
 Rigidbody2D:
   serializedVersion: 4
@@ -144,3 +160,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!95 &7356629399331363888
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8861877568368221673}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

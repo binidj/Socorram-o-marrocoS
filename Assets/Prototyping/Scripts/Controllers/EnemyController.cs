@@ -9,7 +9,6 @@ public class EnemyController : MonoBehaviour
     private List<GameObject> enemies = new List<GameObject>();
     private List<Vector3> pathPositions;
     private Vector3 walkRightOffset = new Vector3(100000f, 0, 0);
-    [SerializeField] private float destroyDelay = 0.2f;
 
     private void OnEnable() {
         EnemySpawner.spawnEnemyEvent += ReceiveEnemy;
@@ -45,12 +44,11 @@ public class EnemyController : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        StartCoroutine(DestroyEnemy(other.gameObject));
+        DestroyEnemy(other.gameObject);
     }
     
-    private IEnumerator DestroyEnemy(GameObject enemy)
+    private void DestroyEnemy(GameObject enemy)
     {
-        yield return new WaitForSeconds(destroyDelay);
         enemy.SetActive(false);    
         DealDamageToPlayer();
     }

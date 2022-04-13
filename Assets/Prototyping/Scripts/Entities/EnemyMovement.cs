@@ -5,11 +5,17 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     private Vector3 target;
-    private float speed = 2.0f; // TODO: set to enemy config
+    private float speed = 2.0f;
     private int targetIndex = -1;
     private bool canMove { get; set; } = false;
     private EnemyController enemyController;
+    [SerializeField] private EnemyStats enemyStats;
 
+    private void Start()
+    {
+        speed = enemyStats.speed;
+    }
+    
     private void Update()
     {
         if (!canMove) return;

@@ -8,6 +8,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private GridController gridController;
     private List<GameObject> enemies = new List<GameObject>();
     private List<Vector3> pathPositions;
+    private Vector3 walkRightOffset = new Vector3(100000f, 0, 0);
+    [SerializeField] private float destroyDelay = 0.2f;
 
     private void OnEnable() {
         EnemySpawner.spawnEnemyEvent += ReceiveEnemy;
@@ -36,9 +38,26 @@ public class EnemyController : MonoBehaviour
     {
         if (index >= pathPositions.Count)
         {
-            // TODO: deal with finishing path
-            return new Vector3(100000000f, 0f, 0f);
+            Vector3 lastPosition = (pathPositions.Count != 0) ? pathPositions[pathPositions.Count - 1] : new Vector3();
+            return lastPosition + walkRightOffset;
         }
         return pathPositions[index];
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        StartCoroutine(DestroyEnemy(other.gameObject));
+    }
+    
+    private IEnumerator DestroyEnemy(GameObject enemy)
+    {
+        yield return new WaitForSeconds(destroyDelay);
+        enemy.SetActive(false);    
+        DealDamageToPlayer();
+    }
+
+    private void DealDamageToPlayer()
+    {
+        // Update UI
+        Debug.Log("Player took damage");
     }
 }

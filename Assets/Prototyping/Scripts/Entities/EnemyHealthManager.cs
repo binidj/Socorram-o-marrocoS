@@ -6,23 +6,35 @@ public class EnemyHealthManager : MonoBehaviour
 {
     private float health;
     [SerializeField] private EnemyStats enemyStats;
+    private Animator animator;
+    [SerializeField] private float deathAnimationTime = 2.0f;
+    private bool dead = false;
+    private EnemyMovement enemyMovement;
 
     private void Start()
     {
+        animator = gameObject.GetComponent<Animator>();
+        enemyMovement = gameObject.GetComponent<EnemyMovement>();
         health = enemyStats.health;
+        animator.SetFloat("Health", health);
     }
 
     public void TakeDamage(float damage)
     {
+        if (dead) return;
         health -= damage;
-        
+        animator.SetFloat("Health", health);
         if (health <= 0)
-            Die();
+        {
+            dead = true;
+            enemyMovement.StopMovement();
+            StartCoroutine(Die());
+        }
     }
 
-    private void Die()
+    private IEnumerator Die()
     {
-        // TODO : die behavior
+        yield return new WaitForSeconds(deathAnimationTime);
         gameObject.SetActive(false);
     }
 }

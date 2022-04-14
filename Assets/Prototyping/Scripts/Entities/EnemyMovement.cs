@@ -10,24 +10,34 @@ public class EnemyMovement : MonoBehaviour
     private bool canMove { get; set; } = false;
     private EnemyController enemyController;
     [SerializeField] private EnemyStats enemyStats;
+    private Animator animator;
 
-    private void Start()
+    private void Awake()
     {
         speed = enemyStats.speed;
+        animator = gameObject.GetComponent<Animator>();
     }
     
     private void Update()
     {
         if (!canMove) return;
-
+        
         if (transform.position == target)
         {
             FollowNextTarget();
         }
+
+        Vector2 moveDirection = new Vector2(target.x - transform.position.x, target.y - transform.position.y);
+        moveDirection.Normalize();
+
+        animator.SetFloat("Horizontal", moveDirection.x);
+        animator.SetFloat("Vertical", moveDirection.y);
     }
 
     private void FixedUpdate() {
-        float maxDistance = speed * Time.deltaTime;
+        if (!canMove) return;
+
+        float maxDistance = speed * Time.fixedDeltaTime;
 
         transform.position = Vector3.MoveTowards(transform.position, target, maxDistance);
     }
@@ -42,6 +52,13 @@ public class EnemyMovement : MonoBehaviour
     {
         this.enemyController = enemyController;
         canMove = true;
+        animator.SetBool("CanMove", true);
         FollowNextTarget();
+    }
+
+    public void StopMovement()
+    {
+        canMove = false;
+        animator.SetBool("CanMove", false);
     }
 }

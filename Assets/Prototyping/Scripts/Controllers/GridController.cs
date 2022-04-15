@@ -63,11 +63,20 @@ namespace Prototyping.Scripts
             Vector3Int tileLocation = pathTileMap.WorldToCell(mousePosition);
 
             if (!CanPlaceTile(tileLocation)) return;
+            if (CanCollideWithTower(mousePosition)) return;
             
             pathTileMap.SetTile(tileLocation, tile);
             tilesPositions.Add(tileLocation);
             UpdateAvailableTilesText();
             
+        }
+
+        private bool CanCollideWithTower(Vector3 mousePosition)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 5f);
+            if (hit.collider != null)
+                return true;
+            return false;
         }
 
         private void RemoveTileAtMousePosition()

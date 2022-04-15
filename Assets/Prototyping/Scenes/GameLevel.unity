@@ -134,6 +134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1839735485 &355290683 stripped
+Tilemap:
+  m_CorrespondingSourceObject: {fileID: 1143813333534020573, guid: 27fa59ff31835a14c955d17f11344521, type: 3}
+  m_PrefabInstance: {fileID: 1143813333663623460}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &468524055 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 592543944247806157, guid: bab760a92d8b699419705c70c8363a66, type: 3}
@@ -254,6 +259,10 @@ PrefabInstance:
       propertyPath: tilesCountTxt
       value: 
       objectReference: {fileID: 228630839}
+    - target: {fileID: 592543944247806157, guid: bab760a92d8b699419705c70c8363a66, type: 3}
+      propertyPath: towersTilemap
+      value: 
+      objectReference: {fileID: 355290683}
     - target: {fileID: 592543944247806157, guid: bab760a92d8b699419705c70c8363a66, type: 3}
       propertyPath: obstaclesTileMap
       value: 

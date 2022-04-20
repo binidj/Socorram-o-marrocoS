@@ -3,8 +3,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using Prototyping.Scripts.ScriptableObjects;
 
-namespace Prototyping.Scripts
+namespace Prototyping.Scripts.Controllers
 {
     public class GridController : MonoBehaviour
     {

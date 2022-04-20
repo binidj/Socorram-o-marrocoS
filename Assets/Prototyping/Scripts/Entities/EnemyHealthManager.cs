@@ -1,40 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Prototyping.Scripts.ScriptableObjects;
 
-public class EnemyHealthManager : MonoBehaviour
+namespace Prototyping.Scripts.Entities
 {
-    private float health;
-    [SerializeField] private EnemyStats enemyStats;
-    private Animator animator;
-    [SerializeField] private float deathAnimationTime = 2.0f;
-    private bool dead = false;
-    private EnemyMovement enemyMovement;
-
-    private void Start()
+    public class EnemyHealthManager : MonoBehaviour
     {
-        animator = gameObject.GetComponent<Animator>();
-        enemyMovement = gameObject.GetComponent<EnemyMovement>();
-        health = enemyStats.health;
-        animator.SetFloat("Health", health);
-    }
+        private float health;
+        [SerializeField] private EnemyStats enemyStats;
+        private Animator animator;
+        [SerializeField] private float deathAnimationTime = 2.0f;
+        private bool dead = false;
+        private EnemyMovement enemyMovement;
 
-    public void TakeDamage(float damage)
-    {
-        if (dead) return;
-        health -= damage;
-        animator.SetFloat("Health", health);
-        if (health <= 0)
+        private void Start()
         {
-            dead = true;
-            enemyMovement.StopMovement();
-            StartCoroutine(Die());
+            animator = gameObject.GetComponent<Animator>();
+            enemyMovement = gameObject.GetComponent<EnemyMovement>();
+            health = enemyStats.health;
+            animator.SetFloat("Health", health);
         }
-    }
 
-    private IEnumerator Die()
-    {
-        yield return new WaitForSeconds(deathAnimationTime);
-        gameObject.SetActive(false);
+        public void TakeDamage(float damage)
+        {
+            if (dead) return;
+            health -= damage;
+            animator.SetFloat("Health", health);
+            if (health <= 0)
+            {
+                dead = true;
+                enemyMovement.StopMovement();
+                StartCoroutine(Die());
+            }
+        }
+
+        private IEnumerator Die()
+        {
+            yield return new WaitForSeconds(deathAnimationTime);
+            gameObject.SetActive(false);
+        }
     }
 }

@@ -1,8 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Prototyping.Scripts.ScriptableObjects;
 using Prototyping.Scripts.Controllers;
+using Prototyping.Scripts.Modfiers;
 
 namespace Prototyping.Scripts.Entities
 {
@@ -15,6 +15,7 @@ namespace Prototyping.Scripts.Entities
         private EnemyController enemyController;
         [SerializeField] private EnemyStats enemyStats;
         private Animator animator;
+        private List<BaseModfier> speedModifiers = new List<BaseModfier>();
 
         private void Awake()
         {
@@ -24,8 +25,10 @@ namespace Prototyping.Scripts.Entities
         
         private void Update()
         {
+            UpdateModifiersLifeSpan();
+
             if (!canMove) return;
-            
+
             if (transform.position == target)
             {
                 FollowNextTarget();
@@ -38,10 +41,47 @@ namespace Prototyping.Scripts.Entities
             animator.SetFloat("Vertical", moveDirection.y);
         }
 
+        private void UpdateModifiersLifeSpan()
+        {
+            List<int> modfiersToRemove = new List<int>();
+
+            for (int i = 0; i < speedModifiers.Count; i++)
+            {
+                var modfier = speedModifiers[i];
+                modfier.lifeSpan -= Time.deltaTime;
+
+                if (modfier.lifeSpan <= 0f)
+                {
+                    modfiersToRemove.Add(i);
+                }
+            }
+
+            speedModifiers.Reverse();
+
+            foreach (int index in modfiersToRemove)
+            {
+                speedModifiers.RemoveAt(index);
+            }
+        }
+
+        private float GetSpeedModfier()
+        {
+            float speedModfier = 1.0f;
+
+            foreach (var modfier in speedModifiers)
+            {
+                speedModfier *= modfier.value;
+            }
+
+            return speedModfier;
+        }
+
         private void FixedUpdate() {
             if (!canMove) return;
 
-            float maxDistance = speed * Time.fixedDeltaTime;
+            float speedModfier = GetSpeedModfier();
+
+            float maxDistance = speed * speedModfier * Time.fixedDeltaTime;
 
             transform.position = Vector3.MoveTowards(transform.position, target, maxDistance);
         }
@@ -64,6 +104,11 @@ namespace Prototyping.Scripts.Entities
         {
             canMove = false;
             animator.SetBool("CanMove", false);
+        }
+
+        public void AddModfier(BaseModfier modfier)
+        {
+            speedModifiers.Add(modfier);
         }
     }
 }

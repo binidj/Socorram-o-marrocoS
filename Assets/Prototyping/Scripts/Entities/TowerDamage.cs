@@ -10,7 +10,6 @@ namespace Prototyping.Scripts.Entities
         private float damagePerSecond;
         [SerializeField] TowerStats towerStats;
         List<GameObject> activeEnemies = new List<GameObject>();
-        Dictionary<GameObject, int> entryCount = new Dictionary<GameObject, int>();
 
         private void Start()
         {
@@ -21,26 +20,17 @@ namespace Prototyping.Scripts.Entities
         {
             foreach (GameObject gameObject in activeEnemies)
             {
-                gameObject.GetComponent<EnemyHealthManager>().TakeDamage(damagePerSecond * Time.deltaTime);
+                gameObject.GetComponent<EnemyHealthManager>()?.TakeDamage(damagePerSecond * Time.deltaTime);
             }
         }
 
         private void OnTriggerEnter2D(Collider2D other) {
-            if (!entryCount.ContainsKey(other.gameObject))
-            {
-                activeEnemies.Add(other.gameObject);
-                entryCount[other.gameObject] = 1;
-            }
-            else 
-                entryCount[other.gameObject] += 1;
+            if (activeEnemies.Contains(other.gameObject)) return;
+            activeEnemies.Add(other.gameObject);
         }
 
         private void OnTriggerExit2D(Collider2D other) {
-            if (entryCount.ContainsKey(other.gameObject) && entryCount[other.gameObject] > 1)
-            {
-                entryCount.Remove(other.gameObject);
-                activeEnemies.Remove(other.gameObject);
-            }
+            activeEnemies.Remove(other.gameObject);
         }
 
     }

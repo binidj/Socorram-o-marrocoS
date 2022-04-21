@@ -16,6 +16,8 @@ namespace Prototyping.Scripts.Entities
         [SerializeField] private EnemyStats enemyStats;
         private Animator animator;
         private List<BaseModfier> speedModifiers = new List<BaseModfier>();
+        private float areaModifier = 1f;
+        private List<GameObject> traps = new List<GameObject>();
 
         private void Awake()
         {
@@ -23,10 +25,27 @@ namespace Prototyping.Scripts.Entities
             animator = gameObject.GetComponent<Animator>();
         }
         
+        private void OnTriggerEnter2D(Collider2D other) 
+        {    
+            if (other.gameObject.GetComponent<FixedTrap>()?.trapType == TrapType.Speed)
+            {
+                traps.Add(other.gameObject);
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D other) 
+        {
+            if (other.gameObject.GetComponent<FixedTrap>()?.trapType == TrapType.Speed)
+            {
+                traps.Remove(other.gameObject);
+            }
+        }
+
         private void Update()
         {
             UpdateModifiersLifeSpan();
-
+            areaModifier = 1f;
+            UpdateAreaModifier();
             if (!canMove) return;
 
             if (transform.position == target)
@@ -41,6 +60,14 @@ namespace Prototyping.Scripts.Entities
             animator.SetFloat("Vertical", moveDirection.y);
         }
 
+        private void UpdateAreaModifier()
+        {
+            foreach (GameObject trap in traps)
+            {
+                areaModifier *= trap.GetComponent<FixedTrap>().value;
+            }
+        }
+
         private void UpdateModifiersLifeSpan()
         {
             List<int> modfiersToRemove = new List<int>();
@@ -49,7 +76,6 @@ namespace Prototyping.Scripts.Entities
             {
                 var modfier = speedModifiers[i];
                 modfier.lifeSpan -= Time.deltaTime;
-
                 if (modfier.lifeSpan <= 0f)
                 {
                     modfiersToRemove.Add(i);
@@ -76,12 +102,17 @@ namespace Prototyping.Scripts.Entities
             return speedModfier;
         }
 
+        public void AddLifeSpanTrap(BaseModfier speedModifier)
+        {
+            speedModifiers.Add(speedModifier);
+        }
+
         private void FixedUpdate() {
             if (!canMove) return;
 
             float speedModfier = GetSpeedModfier();
 
-            float maxDistance = speed * speedModfier * Time.fixedDeltaTime;
+            float maxDistance = speed * speedModfier * areaModifier * Time.fixedDeltaTime;
 
             transform.position = Vector3.MoveTowards(transform.position, target, maxDistance);
         }

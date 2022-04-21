@@ -6,17 +6,8 @@ namespace Prototyping.Scripts.Entities
 {
     public class FixedTrap : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-            
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            
-        }
+        [field: SerializeField] public TrapType trapType { get; private set; }
+        [field: SerializeField] public float value { get; private set; }
     }
 }
 

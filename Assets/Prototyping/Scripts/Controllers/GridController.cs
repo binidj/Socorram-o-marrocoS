@@ -21,6 +21,8 @@ namespace Prototyping.Scripts.Controllers
         private Vector3Int startPosition;
         private Vector3Int endPosition;
         private Vector3 worldOffset = new Vector3(0.5f, 0.5f, 0);
+        [SerializeField] private LayerMask[] ignoreLayers;
+        private LayerMask ignoreMask = new LayerMask();
         private int PathSize
         {
             get { 
@@ -35,6 +37,11 @@ namespace Prototyping.Scripts.Controllers
             tilesLimit = levelConfig.tilesLimit;
             tilesPositions.Add(startPosition);
             UpdateAvailableTilesText();
+
+            foreach (LayerMask mask in ignoreLayers)
+            {
+                ignoreMask |= mask.value;
+            }
         }
 
         private void Update()
@@ -74,7 +81,7 @@ namespace Prototyping.Scripts.Controllers
 
         private bool CanCollideWithTower(Vector3 mousePosition)
         {
-            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 5f);
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 5f, ~ignoreMask);
             if (hit.collider != null)
                 return true;
             return false;

@@ -35,6 +35,15 @@ namespace Prototyping.Scripts.Entities
             }
         }
 
+        private void OnTriggerStay2D(Collider2D other) 
+        {
+            FixedTrap fixedTrap = other.gameObject.GetComponent<FixedTrap>();
+            if (fixedTrap != null && fixedTrap.trapType == TrapType.Health)
+            {
+                TakeDamage(fixedTrap.value * Time.deltaTime);
+            }
+        }
+
         private IEnumerator Die()
         {
             yield return new WaitForSeconds(deathAnimationTime);

@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 7356629399331363888}
   m_Layer: 6
   m_Name: BaseEnemy
-  m_TagString: Untagged
+  m_TagString: WaveEnemies
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

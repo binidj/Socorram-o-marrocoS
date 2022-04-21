@@ -3,8 +3,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using Prototyping.Scripts.ScriptableObjects;
 
-namespace Prototyping.Scripts
+namespace Prototyping.Scripts.Controllers
 {
     public class GridController : MonoBehaviour
     {
@@ -20,6 +21,8 @@ namespace Prototyping.Scripts
         private Vector3Int startPosition;
         private Vector3Int endPosition;
         private Vector3 worldOffset = new Vector3(0.5f, 0.5f, 0);
+        [SerializeField] private LayerMask[] ignoreLayers;
+        private LayerMask ignoreMask = new LayerMask();
         private int PathSize
         {
             get { 
@@ -34,6 +37,11 @@ namespace Prototyping.Scripts
             tilesLimit = levelConfig.tilesLimit;
             tilesPositions.Add(startPosition);
             UpdateAvailableTilesText();
+
+            foreach (LayerMask mask in ignoreLayers)
+            {
+                ignoreMask |= mask.value;
+            }
         }
 
         private void Update()
@@ -73,7 +81,7 @@ namespace Prototyping.Scripts
 
         private bool CanCollideWithTower(Vector3 mousePosition)
         {
-            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 5f);
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 5f, ~ignoreMask);
             if (hit.collider != null)
                 return true;
             return false;

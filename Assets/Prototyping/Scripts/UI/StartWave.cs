@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class StartWave : MonoBehaviour
 {
     [SerializeField] private Button button;
+    [SerializeField] private GameObject disableOnWaveStart;
     public delegate void StartWaveEvent();
     public static event StartWaveEvent startWaveEvent;
 
@@ -18,6 +19,6 @@ public class StartWave : MonoBehaviour
     private void TriggerEvent()
     {
         startWaveEvent?.Invoke();
-        gameObject.SetActive(false);
+        disableOnWaveStart.SetActive(false);
     }
 }

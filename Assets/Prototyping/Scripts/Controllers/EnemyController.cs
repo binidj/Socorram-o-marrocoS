@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Prototyping.Scripts.Entities;
+using UnityEngine.UI;
 
 namespace Prototyping.Scripts.Controllers
 {
@@ -11,6 +12,8 @@ namespace Prototyping.Scripts.Controllers
         private List<GameObject> enemies = new List<GameObject>();
         private List<Vector3> pathPositions;
         private Vector3 walkRightOffset = new Vector3(100000f, 0, 0);
+        [SerializeField] private int playerHealth = 3;
+        [SerializeField] private Text textHealth;
 
         private void OnEnable() {
             EnemySpawner.spawnEnemyEvent += ReceiveEnemy;
@@ -21,6 +24,11 @@ namespace Prototyping.Scripts.Controllers
         {
             EnemySpawner.spawnEnemyEvent -= ReceiveEnemy;
             StartWave.startWaveEvent -= GetPathPositions;
+        }
+
+        private void Start()
+        {
+            textHealth.text = $"Health: {playerHealth}";
         }
 
         private void ReceiveEnemy(GameObject newEnemy)
@@ -57,8 +65,8 @@ namespace Prototyping.Scripts.Controllers
 
         private void DealDamageToPlayer()
         {
-            // Update UI
-            Debug.Log("Player took damage");
+            playerHealth -= 1;
+            textHealth.text = $"Health: {playerHealth}";
         }
     }
 }

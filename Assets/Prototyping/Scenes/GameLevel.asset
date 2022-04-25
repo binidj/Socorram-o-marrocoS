@@ -15,3 +15,12 @@ MonoBehaviour:
   startPosition: {x: -9, y: -1, z: 0}
   endPosition: {x: 8, y: -1, z: 0}
   tilesLimit: 30
+  trapsAvailable:
+  - trap: {fileID: 8573327376557159420, guid: 33d63efd08924404a81f6c5ee1ca9be5, type: 3}
+    limit: 3
+  - trap: {fileID: 1424635950914083923, guid: 5ddbc5dd4eb471f43acfb8da198ced20, type: 3}
+    limit: 3
+  - trap: {fileID: 9174716716099083630, guid: 886f8ec85db01654db777792fd562727, type: 3}
+    limit: 3
+  - trap: {fileID: 8805607164750614996, guid: ef1e73dbbc0515f4b9fd81f1dd2ad38b, type: 3}
+    limit: 3

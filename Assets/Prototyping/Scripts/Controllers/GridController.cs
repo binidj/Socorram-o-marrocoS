@@ -17,6 +17,7 @@ namespace Prototyping.Scripts.Controllers
         [SerializeField] private Tile tile;
         [SerializeField] private List<Vector3Int> tilesPositions;
         [SerializeField] private LevelConfig levelConfig;
+        [SerializeField] private TrapsController trapsController;
         private int tilesLimit;
         private Vector3Int startPosition;
         private Vector3Int endPosition;
@@ -65,7 +66,7 @@ namespace Prototyping.Scripts.Controllers
         }
         private void SetTileAtMousePosition()
         {
-            if (PathSize >= tilesLimit || IsPathCompleted()) return;
+            if (trapsController.isPlacingTrap || PathSize >= tilesLimit || IsPathCompleted()) return;
             
             Vector3 mousePosition = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int tileLocation = pathTileMap.WorldToCell(mousePosition);
@@ -81,7 +82,7 @@ namespace Prototyping.Scripts.Controllers
 
         private bool CanCollideWithTower(Vector3 mousePosition)
         {
-            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 5f, ~ignoreMask);
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 15f, ~ignoreMask);
             if (hit.collider != null)
                 return true;
             return false;
@@ -92,7 +93,7 @@ namespace Prototyping.Scripts.Controllers
             var mousePosition = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
             var tileLocation = pathTileMap.WorldToCell(mousePosition);
 
-            if (!pathTileMap.GetTile(tileLocation) || tileLocation == startPosition) return;
+            if (!pathTileMap.GetTile(tileLocation) || tileLocation == startPosition || trapsController.isPlacingTrap) return;
             
             var removedIndex = tilesPositions.FindIndex(position => position.Equals(tileLocation));
 
@@ -104,6 +105,13 @@ namespace Prototyping.Scripts.Controllers
             for (var i = 0; i <= quantityToRemove; i++)
             {
                 pathTileMap.SetTile(tilesPositions[lastIndex-i], null);
+                RaycastHit2D hit = Physics2D.Raycast(new Vector2(tilesPositions[lastIndex-i].x + 0.5f, tilesPositions[lastIndex-i].y + 0.5f), Vector2.zero, 15f, LayerMask.GetMask("Traps"));
+                if (hit.collider != null)
+                {
+                    GameObject gameObject = hit.collider.gameObject.transform.parent.gameObject;
+                    gameObject.transform.position = new Vector3(100f, 100f, 0);
+                    gameObject.SetActive(false);
+                }
                 tilesPositions.RemoveAt(lastIndex-i);
             }
             

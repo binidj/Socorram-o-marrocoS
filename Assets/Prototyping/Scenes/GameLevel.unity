@@ -359,6 +359,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 355290683}
     - target: {fileID: 592543944247806157, guid: bab760a92d8b699419705c70c8363a66, type: 3}
+      propertyPath: trapsController
+      value: 
+      objectReference: {fileID: 2042746544}
+    - target: {fileID: 592543944247806157, guid: bab760a92d8b699419705c70c8363a66, type: 3}
       propertyPath: obstaclesTileMap
       value: 
       objectReference: {fileID: 1143813333663623461}

@@ -17,6 +17,7 @@ namespace Prototyping.Scripts.Controllers
         [SerializeField] private Tile tile;
         [SerializeField] private List<Vector3Int> tilesPositions;
         [SerializeField] private LevelConfig levelConfig;
+        [SerializeField] private TrapsController trapsController;
         private int tilesLimit;
         private Vector3Int startPosition;
         private Vector3Int endPosition;
@@ -65,7 +66,7 @@ namespace Prototyping.Scripts.Controllers
         }
         private void SetTileAtMousePosition()
         {
-            if (PathSize >= tilesLimit || IsPathCompleted()) return;
+            if (trapsController.isPlacingTrap || PathSize >= tilesLimit || IsPathCompleted()) return;
             
             Vector3 mousePosition = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int tileLocation = pathTileMap.WorldToCell(mousePosition);
@@ -92,7 +93,7 @@ namespace Prototyping.Scripts.Controllers
             var mousePosition = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
             var tileLocation = pathTileMap.WorldToCell(mousePosition);
 
-            if (!pathTileMap.GetTile(tileLocation) || tileLocation == startPosition) return;
+            if (!pathTileMap.GetTile(tileLocation) || tileLocation == startPosition || trapsController.isPlacingTrap) return;
             
             var removedIndex = tilesPositions.FindIndex(position => position.Equals(tileLocation));
 

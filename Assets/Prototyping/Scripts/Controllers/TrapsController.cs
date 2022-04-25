@@ -44,6 +44,9 @@ namespace Prototyping.Scripts.Controllers
         
         private void PlaceTrap()
         {
+            if (pathTilemap.GetTile(tilePosition) == null) return;
+            if (currentTrap.GetComponentInChildren<TrapCollision>().isColliding) return;
+
             SpriteRenderer spriteRenderer = currentTrap.GetComponent<SpriteRenderer>();
             Color color = spriteRenderer.color;
             color.a = 1f;
@@ -59,7 +62,6 @@ namespace Prototyping.Scripts.Controllers
 
         private bool HitUIComponent()
         {
-            Debug.Log(EventSystem.current.IsPointerOverGameObject());
             return EventSystem.current.IsPointerOverGameObject();
         }
 
@@ -117,6 +119,7 @@ namespace Prototyping.Scripts.Controllers
 
         public void ClearSelection()
         {
+            if (!isPlacingTrap) return;
             currentTrap.transform.position = trapsPosition;
             currentTrap.SetActive(false);
             currentTrap = null;

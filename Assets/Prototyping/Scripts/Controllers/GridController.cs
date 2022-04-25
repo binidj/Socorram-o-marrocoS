@@ -82,7 +82,7 @@ namespace Prototyping.Scripts.Controllers
 
         private bool CanCollideWithTower(Vector3 mousePosition)
         {
-            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 5f, ~ignoreMask);
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 15f, ~ignoreMask);
             if (hit.collider != null)
                 return true;
             return false;
@@ -105,6 +105,13 @@ namespace Prototyping.Scripts.Controllers
             for (var i = 0; i <= quantityToRemove; i++)
             {
                 pathTileMap.SetTile(tilesPositions[lastIndex-i], null);
+                RaycastHit2D hit = Physics2D.Raycast(new Vector2(tilesPositions[lastIndex-i].x + 0.5f, tilesPositions[lastIndex-i].y + 0.5f), Vector2.zero, 15f, LayerMask.GetMask("Traps"));
+                if (hit.collider != null)
+                {
+                    GameObject gameObject = hit.collider.gameObject.transform.parent.gameObject;
+                    gameObject.transform.position = new Vector3(100f, 100f, 0);
+                    gameObject.SetActive(false);
+                }
                 tilesPositions.RemoveAt(lastIndex-i);
             }
             

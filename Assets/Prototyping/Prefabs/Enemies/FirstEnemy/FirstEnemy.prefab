@@ -12,6 +12,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1799795297373335151, guid: 3cfbbd18d0acb454389ac2debc861fc4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1799795297373335151, guid: 3cfbbd18d0acb454389ac2debc861fc4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1799795297373335151, guid: 3cfbbd18d0acb454389ac2debc861fc4, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1799795297373335151, guid: 3cfbbd18d0acb454389ac2debc861fc4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -51,9 +63,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7356629399331363888, guid: 3cfbbd18d0acb454389ac2debc861fc4, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: 884113b3ece7e034b9049045d180e32e, type: 2}
     - target: {fileID: 8861877568368221673, guid: 3cfbbd18d0acb454389ac2debc861fc4, type: 3}
       propertyPath: m_Name
-      value: BaseEnemy
+      value: FirstEnemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cfbbd18d0acb454389ac2debc861fc4, type: 3}

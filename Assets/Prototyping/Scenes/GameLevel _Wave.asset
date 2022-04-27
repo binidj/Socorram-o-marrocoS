@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: GameLevel _Wave
   m_EditorClassIdentifier: 
   enemies:
-  - enemy: {fileID: 8861877568368221673, guid: 3cfbbd18d0acb454389ac2debc861fc4, type: 3}
+  - enemy: {fileID: 2708238584603527061, guid: 5a9bd03722f8ec449a6c1c556df37fa7, type: 3}
     timeToWait: 3
-  - enemy: {fileID: 8861877568368221673, guid: 3cfbbd18d0acb454389ac2debc861fc4, type: 3}
+  - enemy: {fileID: 2708238584603527061, guid: 5a9bd03722f8ec449a6c1c556df37fa7, type: 3}
     timeToWait: 10
-  - enemy: {fileID: 8861877568368221673, guid: 3cfbbd18d0acb454389ac2debc861fc4, type: 3}
+  - enemy: {fileID: 2708238584603527061, guid: 5a9bd03722f8ec449a6c1c556df37fa7, type: 3}
     timeToWait: 2

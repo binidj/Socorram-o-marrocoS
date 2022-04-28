@@ -17,5 +17,5 @@ MonoBehaviour:
     timeToWait: 3
   - enemy: {fileID: 2708238584603527061, guid: 5a9bd03722f8ec449a6c1c556df37fa7, type: 3}
     timeToWait: 10
-  - enemy: {fileID: 2708238584603527061, guid: 5a9bd03722f8ec449a6c1c556df37fa7, type: 3}
+  - enemy: {fileID: 3404059959204165616, guid: 2dac89dc44c6589458470712e85d53be, type: 3}
     timeToWait: 2

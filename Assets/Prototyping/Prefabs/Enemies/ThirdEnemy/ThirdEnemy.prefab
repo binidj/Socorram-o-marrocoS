@@ -9,8 +9,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2708238584603527061, guid: 5a9bd03722f8ec449a6c1c556df37fa7, type: 3}
       propertyPath: m_Name
-      value: FirstEnemy
+      value: ThirdEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 4141571545821382220, guid: 5a9bd03722f8ec449a6c1c556df37fa7, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: e2bb1fca62bc21f40981e9888001e004, type: 2}
+    - target: {fileID: 4633046230401394495, guid: 5a9bd03722f8ec449a6c1c556df37fa7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -6217960001967781591, guid: 5f9a38b45779e7847901c59ea5a230ca, type: 3}
     - target: {fileID: 5157754480007115795, guid: 5a9bd03722f8ec449a6c1c556df37fa7, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -54,6 +62,14 @@ PrefabInstance:
     - target: {fileID: 5157754480007115795, guid: 5a9bd03722f8ec449a6c1c556df37fa7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8933552930228285164, guid: 5a9bd03722f8ec449a6c1c556df37fa7, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 8933552930228285164, guid: 5a9bd03722f8ec449a6c1c556df37fa7, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.31
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a9bd03722f8ec449a6c1c556df37fa7, type: 3}

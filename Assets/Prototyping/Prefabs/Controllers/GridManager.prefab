@@ -48,7 +48,7 @@ MonoBehaviour:
   startWaveBtn: {fileID: 0}
   pathTileMap: {fileID: 0}
   obstaclesTileMap: {fileID: 0}
-  tile: {fileID: 11400000, guid: f118e39a6cc15e14599be9a4eaa8c0ed, type: 2}
+  tile: {fileID: 11400000, guid: 969ddd354f409a14e9fe00386a6854a3, type: 2}
   tilesPositions: []
   levelConfig: {fileID: 0}
   trapsController: {fileID: 0}

@@ -20,7 +20,7 @@ namespace Prototyping.Scripts.Controllers
         private Dictionary<GameObject, int> trapCount = new Dictionary<GameObject, int>();
         private Dictionary<GameObject, List<GameObject>> trapInstances = new Dictionary<GameObject, List<GameObject>>();
         private Vector3 trapsPosition = new Vector3(100f, 100f, 0f);
-        private readonly Vector3 tileOffset = new Vector3(0.5f, 0.5f, 0);
+        // private readonly Vector3 tileOffset = new Vector3(0.5f, 0.5f, 0);
 
         private void Awake()
         {
@@ -76,7 +76,7 @@ namespace Prototyping.Scripts.Controllers
                 lastPosition = tilePosition;
 
             if (currentTrap != null)
-                currentTrap.transform.position = lastPosition + tileOffset;
+                currentTrap.transform.position = trapsTilemap.GetCellCenterWorld(lastPosition); // lastPosition + tileOffset;
 
             if (HitUIComponent()) return;
 

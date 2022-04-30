@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 592543944247806158}
   - component: {fileID: 592543944247806157}
+  - component: {fileID: 301947360135352667}
   m_Layer: 0
   m_Name: GridManager
   m_TagString: Untagged
@@ -48,8 +49,21 @@ MonoBehaviour:
   pathTileMap: {fileID: 0}
   obstaclesTileMap: {fileID: 0}
   tile: {fileID: 11400000, guid: f118e39a6cc15e14599be9a4eaa8c0ed, type: 2}
-  tilesLimit: 10
-  path: []
   tilesPositions: []
-  startPosition: {x: 0, y: 0, z: 0}
-  endPosition: {x: 0, y: 0, z: 0}
+  levelConfig: {fileID: 0}
+  trapsController: {fileID: 0}
+  ignoreLayers: []
+--- !u!114 &301947360135352667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592543944247806156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 814b7461d62334e188b3a43681f700b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  linePrefab: {fileID: 1000013289361224, guid: 67db316532143b248b19bb424019b871, type: 3}
+  maxLines: 80

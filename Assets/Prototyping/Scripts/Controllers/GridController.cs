@@ -21,9 +21,10 @@ namespace Prototyping.Scripts.Controllers
         private int tilesLimit;
         private Vector3Int startPosition;
         private Vector3Int endPosition;
-        private Vector3 worldOffset = new Vector3(0.5f, 0.5f, 0);
         [SerializeField] private LayerMask[] ignoreLayers;
         private LayerMask ignoreMask = new LayerMask();
+        private LineFactory lineFactory;
+        private bool waveStarted = false;
         private int PathSize
         {
             get { 
@@ -37,6 +38,7 @@ namespace Prototyping.Scripts.Controllers
             endPosition = levelConfig.endPosition;
             tilesLimit = levelConfig.tilesLimit;
             tilesPositions.Add(startPosition);
+            lineFactory = GetComponent<LineFactory>();
             UpdateAvailableTilesText();
 
             foreach (LayerMask mask in ignoreLayers)
@@ -45,8 +47,20 @@ namespace Prototyping.Scripts.Controllers
             }
         }
 
+        private void OnEnable() 
+        {
+            StartWave.startWaveEvent += BeginWave;
+        }
+
+        private void OnDisable() 
+        {
+            StartWave.startWaveEvent -= BeginWave;
+        }
+
         private void Update()
         {
+            if (waveStarted) return;
+
             if (Input.GetMouseButtonUp(0))
                 SetTileAtMousePosition();
 
@@ -74,10 +88,11 @@ namespace Prototyping.Scripts.Controllers
             if (!CanPlaceTile(tileLocation)) return;
             if (CanCollideWithTower(mousePosition)) return;
             
+            lineFactory.GetLine(pathTileMap.GetCellCenterWorld(tileLocation), pathTileMap.GetCellCenterWorld(tilesPositions.Last()), 0.02f, new Color(255,0,0,1));
             pathTileMap.SetTile(tileLocation, tile);
             tilesPositions.Add(tileLocation);
-            UpdateAvailableTilesText();
             
+            UpdateAvailableTilesText();
         }
 
         private bool CanCollideWithTower(Vector3 mousePosition)
@@ -105,7 +120,7 @@ namespace Prototyping.Scripts.Controllers
             for (var i = 0; i <= quantityToRemove; i++)
             {
                 pathTileMap.SetTile(tilesPositions[lastIndex-i], null);
-                RaycastHit2D hit = Physics2D.Raycast(new Vector2(tilesPositions[lastIndex-i].x + 0.5f, tilesPositions[lastIndex-i].y + 0.5f), Vector2.zero, 15f, LayerMask.GetMask("Traps"));
+                RaycastHit2D hit = Physics2D.Raycast(pathTileMap.GetCellCenterWorld(tilesPositions[lastIndex-i]), Vector2.zero, 15f, LayerMask.GetMask("Traps"));
                 if (hit.collider != null)
                 {
                     GameObject gameObject = hit.collider.gameObject.transform.parent.gameObject;
@@ -113,6 +128,7 @@ namespace Prototyping.Scripts.Controllers
                     gameObject.SetActive(false);
                 }
                 tilesPositions.RemoveAt(lastIndex-i);
+                lineFactory.RemoveLine();
             }
             
             UpdateAvailableTilesText();
@@ -157,10 +173,19 @@ namespace Prototyping.Scripts.Controllers
             List<Vector3> pathPositions = new List<Vector3>();
             foreach (Vector3Int position in tilesPositions)
             {
-                pathPositions.Add(pathTileMap.CellToWorld(position) + worldOffset);
+                pathPositions.Add(pathTileMap.GetCellCenterWorld(position));
             }
-            pathPositions.Add(pathTileMap.CellToWorld(endPosition) + worldOffset);
+            pathPositions.Add(pathTileMap.GetCellCenterWorld(endPosition));
             return pathPositions;
+        }
+
+        public void BeginWave()
+        {
+            waveStarted = true;
+            foreach (var position in tilesPositions)
+            {
+                lineFactory.RemoveLine();
+            }
         }
     }
 }

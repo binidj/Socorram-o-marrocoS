@@ -47,10 +47,17 @@ namespace Prototyping.Scripts.Controllers
             if (pathTilemap.GetTile(tilePosition) == null) return;
             if (currentTrap.GetComponentInChildren<TrapCollision>().isColliding) return;
 
-            SpriteRenderer spriteRenderer = currentTrap.GetComponent<SpriteRenderer>();
-            Color color = spriteRenderer.color;
-            color.a = 1f;
-            spriteRenderer.color = color;
+            
+
+            // SpriteRenderer spriteRenderer = currentTrap.GetComponent<SpriteRenderer>();
+            SpriteRenderer[] spriteRenderers = currentTrap.GetComponentsInChildren<SpriteRenderer>();
+            foreach (var spriteRenderer in spriteRenderers)
+            {
+                Color color = spriteRenderer.color;
+                color.a = 1f;
+                spriteRenderer.color = color;
+            }
+            // spriteRenderer.color = color;
             currentTrap = null;
             selectedTrap = null;
         }
@@ -103,10 +110,14 @@ namespace Prototyping.Scripts.Controllers
                 if (!trapInstance.activeSelf)
                 {
                     currentTrap = trapInstance;
-                    SpriteRenderer spriteRenderer = currentTrap.GetComponent<SpriteRenderer>();
-                    Color color = spriteRenderer.color;
-                    color.a = 0.2f;
-                    spriteRenderer.color = color;
+                    // SpriteRenderer spriteRenderer = currentTrap.GetComponent<SpriteRenderer>();
+                    SpriteRenderer[] spriteRenderers = currentTrap.GetComponentsInChildren<SpriteRenderer>();
+                    foreach (var spriteRenderer in spriteRenderers)
+                    {
+                        Color color = spriteRenderer.color;
+                        color.a = 0.4f;
+                        spriteRenderer.color = color;
+                    }
                     lastPosition = new Vector3Int(100, 100, 0);
                     currentTrap.SetActive(true);
                     break;

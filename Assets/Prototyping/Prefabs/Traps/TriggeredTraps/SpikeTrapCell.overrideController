@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SpikeTrapCell
+  m_Controller: {fileID: 9100000, guid: e16dc805578b4ee479f5b1163a8e2c7f, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 2ab923774af4df94ba7d28e228463b66, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 32ddaab851fef1c4e9c34f0371d739d9, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 8b6eeae651bd84744bf3982090ca4ec2, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 11eba7869653d0048af3ffca54c9095a, type: 2}

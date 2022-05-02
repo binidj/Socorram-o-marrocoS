@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BearTrapCell
+  m_Controller: {fileID: 9100000, guid: e16dc805578b4ee479f5b1163a8e2c7f, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 2ab923774af4df94ba7d28e228463b66, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: d951d357dfed44d4f982c909ad7d8b21, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 8b6eeae651bd84744bf3982090ca4ec2, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 8cd63cb3a65e0e64c9a85e57d6e214ef, type: 2}

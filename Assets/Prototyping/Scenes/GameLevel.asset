@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fa02e92ebf8cc24799ba93b059a90f4, type: 3}
   m_Name: GameLevel
   m_EditorClassIdentifier: 
-  startPosition: {x: -9, y: -1, z: 0}
-  endPosition: {x: 8, y: -1, z: 0}
-  tilesLimit: 30
+  startPosition: {x: -13, y: -1, z: 0}
+  endPosition: {x: 12, y: -1, z: 0}
+  tilesLimit: 40
   trapsAvailable:
   - trap: {fileID: 8573327376557159420, guid: 33d63efd08924404a81f6c5ee1ca9be5, type: 3}
     limit: 3

@@ -20,7 +20,7 @@ namespace Prototyping.Scripts.Controllers
         private Dictionary<GameObject, int> trapCount = new Dictionary<GameObject, int>();
         private Dictionary<GameObject, List<GameObject>> trapInstances = new Dictionary<GameObject, List<GameObject>>();
         private Vector3 trapsPosition = new Vector3(100f, 100f, 0f);
-        private readonly Vector3 tileOffset = new Vector3(0.5f, 0.5f, 0);
+        // private readonly Vector3 tileOffset = new Vector3(0.5f, 0.5f, 0);
 
         private void Awake()
         {
@@ -47,10 +47,17 @@ namespace Prototyping.Scripts.Controllers
             if (pathTilemap.GetTile(tilePosition) == null) return;
             if (currentTrap.GetComponentInChildren<TrapCollision>().isColliding) return;
 
-            SpriteRenderer spriteRenderer = currentTrap.GetComponent<SpriteRenderer>();
-            Color color = spriteRenderer.color;
-            color.a = 1f;
-            spriteRenderer.color = color;
+            
+
+            // SpriteRenderer spriteRenderer = currentTrap.GetComponent<SpriteRenderer>();
+            SpriteRenderer[] spriteRenderers = currentTrap.GetComponentsInChildren<SpriteRenderer>();
+            foreach (var spriteRenderer in spriteRenderers)
+            {
+                Color color = spriteRenderer.color;
+                color.a = 1f;
+                spriteRenderer.color = color;
+            }
+            // spriteRenderer.color = color;
             currentTrap = null;
             selectedTrap = null;
         }
@@ -76,7 +83,7 @@ namespace Prototyping.Scripts.Controllers
                 lastPosition = tilePosition;
 
             if (currentTrap != null)
-                currentTrap.transform.position = lastPosition + tileOffset;
+                currentTrap.transform.position = trapsTilemap.GetCellCenterWorld(lastPosition); // lastPosition + tileOffset;
 
             if (HitUIComponent()) return;
 
@@ -103,10 +110,14 @@ namespace Prototyping.Scripts.Controllers
                 if (!trapInstance.activeSelf)
                 {
                     currentTrap = trapInstance;
-                    SpriteRenderer spriteRenderer = currentTrap.GetComponent<SpriteRenderer>();
-                    Color color = spriteRenderer.color;
-                    color.a = 0.2f;
-                    spriteRenderer.color = color;
+                    // SpriteRenderer spriteRenderer = currentTrap.GetComponent<SpriteRenderer>();
+                    SpriteRenderer[] spriteRenderers = currentTrap.GetComponentsInChildren<SpriteRenderer>();
+                    foreach (var spriteRenderer in spriteRenderers)
+                    {
+                        Color color = spriteRenderer.color;
+                        color.a = 0.4f;
+                        spriteRenderer.color = color;
+                    }
                     lastPosition = new Vector3Int(100, 100, 0);
                     currentTrap.SetActive(true);
                     break;

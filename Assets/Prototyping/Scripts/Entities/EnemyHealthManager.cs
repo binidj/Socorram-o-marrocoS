@@ -14,8 +14,8 @@ namespace Prototyping.Scripts.Entities
         private bool dead = false;
         private EnemyMovement enemyMovement;
         public bool isLastEnemy {get; set;} = false;
-        public delegate void EndLevel();
-        public static event EndLevel endLevelEvent;
+        public delegate void UpdateDeathCount();
+        public static event UpdateDeathCount updateDeathCountEvent;
 
         private void Start()
         {
@@ -49,8 +49,8 @@ namespace Prototyping.Scripts.Entities
 
         private IEnumerator Die()
         {
+            updateDeathCountEvent?.Invoke();
             yield return new WaitForSeconds(deathAnimationTime);
-            if (isLastEnemy) endLevelEvent?.Invoke();
             gameObject.SetActive(false);
         }
     }

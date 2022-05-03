@@ -10,6 +10,7 @@ namespace Prototyping.Scripts.Controllers
     {
         [SerializeField] private EnemyWave currentWave;
         private bool isSpawning = false;
+        public static int enemyAmount = -1;
         private int enemyIndex = -1;
         private float timeToWait = 0f;
         public delegate void SpawnEnemy(GameObject enemy);
@@ -21,6 +22,11 @@ namespace Prototyping.Scripts.Controllers
 
         private void OnDisable() {
             StartWave.startWaveEvent -= BeginWave;
+        }
+
+        private void Start() 
+        {
+            enemyAmount = currentWave.enemies.Count;
         }
 
         private void BeginWave()

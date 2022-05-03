@@ -5,40 +5,63 @@ using Prototyping.Scripts.Modfiers;
 
 namespace Prototyping.Scripts.Entities
 {
-    public class TriggeredTrap : MonoBehaviour
+    public class TriggeredTrap : MonoBehaviour, ITrap
     {
-        private bool canTriggerTrap = false;
+        // private bool canTriggerTrap = true;
+        public bool isPlacing {get; set;} = false;
         [field: SerializeField] public TrapType trapType { get; private set; }
         [field: SerializeField] public float value { get; private set; }
         [field: SerializeField] public float lifeSpan { get; private set; }
+        private Animator[] animators;
 
-        private void OnEnable() 
+        private void Start()
         {
-            StartWave.startWaveEvent += EnableTriggerTrap;
+            animators = transform.parent.GetComponentsInChildren<Animator>();    
         }
 
-        private void OnDisable() 
-        {
-            StartWave.startWaveEvent -= EnableTriggerTrap;
-        }
+        // private void OnEnable() 
+        // {
+        //     StartWave.startWaveEvent += EnableTriggerTrap;
+        // }
 
-        private void EnableTriggerTrap()
-        {
-            canTriggerTrap = true;
-        }
+        // private void OnDisable() 
+        // {
+        //     StartWave.startWaveEvent -= EnableTriggerTrap;
+        // }
 
-        private void OnMouseUp() 
-        {
-            if (!canTriggerTrap) return;
-            canTriggerTrap = false;
+        // private void EnableTriggerTrap()
+        // {
+        //     canTriggerTrap = true;
+        // }
+
+        // private void OnMouseUp() 
+        // {
+        //     if (isPlacing) return;
+        //     // if (!canTriggerTrap) return;
+        //     // canTriggerTrap = false;
             
-            Trigger();
+        //     if (Input.GetMouseButtonUp(0))
+        //     {
+        //         Vector3 mousePosition = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
+        //         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 15f, LayerMask.GetMask("Traps"));
 
-            gameObject.transform.parent.gameObject.SetActive(false);
-        }
+        //         if (hit.collider != null)
+        //         {
 
-        private void Trigger()
+        //         }
+        //         Trigger();
+
+        //         gameObject.transform.parent.gameObject.SetActive(false);
+        //         gameObject.transform.parent.gameObject.tag = "Respawn";
+        //     }
+            
+        //     // Destroy(gameObject.transform.parent.gameObject);
+        // }
+
+        public void Trigger()
         {
+            isPlacing = true;
+
             ContactFilter2D filter = new ContactFilter2D().NoFilter();
             List<Collider2D> colliders = new List<Collider2D>();
             Physics2D.OverlapCollider(gameObject.GetComponent<Collider2D>(), filter, colliders);
@@ -54,6 +77,23 @@ namespace Prototyping.Scripts.Entities
                     collider.gameObject.GetComponent<EnemyMovement>().AddLifeSpanTrap(new BaseModfier(value, lifeSpan));
                 }
             }
+
+            GameObject trap = gameObject.transform.parent.gameObject;
+            StartCoroutine(DestroyTrap(trap));
+            
+            // gameObject.transform.parent.gameObject.SetActive(false);
+            // gameObject.transform.parent.gameObject.tag = "Respawn";
+        }
+
+        IEnumerator DestroyTrap(GameObject trap)
+        {
+            foreach (var animator in animators)
+            {
+                animator.SetBool("triggerTrap", true);
+            }
+            yield return new WaitForSeconds(1.5f);
+            trap.SetActive(false);
+            trap.tag = "Respawn";
         }
     }
 }

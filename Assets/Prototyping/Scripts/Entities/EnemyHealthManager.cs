@@ -13,6 +13,9 @@ namespace Prototyping.Scripts.Entities
         [SerializeField] private float deathAnimationTime = 2.0f;
         private bool dead = false;
         private EnemyMovement enemyMovement;
+        public bool isLastEnemy {get; set;} = false;
+        public delegate void UpdateDeathCount();
+        public static event UpdateDeathCount updateDeathCountEvent;
 
         private void Start()
         {
@@ -46,6 +49,7 @@ namespace Prototyping.Scripts.Entities
 
         private IEnumerator Die()
         {
+            updateDeathCountEvent?.Invoke();
             yield return new WaitForSeconds(deathAnimationTime);
             gameObject.SetActive(false);
         }

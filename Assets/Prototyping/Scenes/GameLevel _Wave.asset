@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemies:
   - enemy: {fileID: 2708238584603527061, guid: 5a9bd03722f8ec449a6c1c556df37fa7, type: 3}
-    timeToWait: 3
+    timeToWait: 0.5
   - enemy: {fileID: 6590050876286972703, guid: 81a22e338d4abb941a89b5445601344d, type: 3}
-    timeToWait: 4
+    timeToWait: 0.5
   - enemy: {fileID: 3404059959204165616, guid: 2dac89dc44c6589458470712e85d53be, type: 3}
-    timeToWait: 2
+    timeToWait: 0.5

@@ -25,10 +25,14 @@ namespace Prototyping.Scripts.Entities
             else
                 animator.SetBool("enemiesInside", false);
                 
-            foreach (GameObject gameObject in activeEnemies)
+            if (activeEnemies.Count > 0)
             {
-                gameObject.GetComponent<EnemyHealthManager>()?.TakeDamage(damagePerSecond * Time.deltaTime);
+                activeEnemies[0].GetComponent<EnemyHealthManager>()?.TakeDamage(damagePerSecond * Time.deltaTime);
             }
+            // foreach (GameObject gameObject in activeEnemies)
+            // {
+            //     gameObject.GetComponent<EnemyHealthManager>()?.TakeDamage(damagePerSecond * Time.deltaTime);
+            // }
         }
 
         private void OnTriggerEnter2D(Collider2D other) {

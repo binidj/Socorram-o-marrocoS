@@ -14,16 +14,29 @@ namespace Prototyping.Scripts.Controllers
         private Vector3 walkRightOffset = new Vector3(100000f, 0, 0);
         [SerializeField] private int playerHealth = 3;
         [SerializeField] private Text textHealth;
+        [SerializeField] private LevelController levelController;
+        private int deathCount = 0;
+
+        public void UpdateDeathCount()
+        {
+            deathCount += 1;
+            if (deathCount == EnemySpawner.enemyAmount)
+            {
+                levelController.GoToNextLevel();
+            }
+        }
 
         private void OnEnable() {
             EnemySpawner.spawnEnemyEvent += ReceiveEnemy;
             StartWave.startWaveEvent += GetPathPositions;
+            EnemyHealthManager.updateDeathCountEvent += UpdateDeathCount;
         }
 
         private void OnDisable()
         {
             EnemySpawner.spawnEnemyEvent -= ReceiveEnemy;
             StartWave.startWaveEvent -= GetPathPositions;
+            EnemyHealthManager.updateDeathCountEvent -= UpdateDeathCount;
         }
 
         private void Start()
@@ -54,19 +67,33 @@ namespace Prototyping.Scripts.Controllers
         }
 
         private void OnTriggerEnter2D(Collider2D other) {
+            if (other.gameObject.tag != "WaveEnemies") return;
             DestroyEnemy(other.gameObject);
         }
         
         private void DestroyEnemy(GameObject enemy)
         {
-            enemy.SetActive(false);    
-            DealDamageToPlayer();
+            enemy.SetActive(false);
+            if (!DealDamageToPlayer())
+            {
+                UpdateDeathCount();
+            }
         }
 
-        private void DealDamageToPlayer()
+        private bool DealDamageToPlayer()
         {
             playerHealth -= 1;
+            if (playerHealth == 0) 
+            {
+                levelController.ReloadLevel();
+                return true;
+            }
+            else if (playerHealth < 0)
+            {
+                return true;
+            }
             textHealth.text = $"Health: {playerHealth}";
+            return false;
         }
     }
 }

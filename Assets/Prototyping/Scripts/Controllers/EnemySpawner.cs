@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Prototyping.Scripts.ScriptableObjects;
+using Prototyping.Scripts.Entities;
 
 namespace Prototyping.Scripts.Controllers
 {
@@ -9,6 +10,7 @@ namespace Prototyping.Scripts.Controllers
     {
         [SerializeField] private EnemyWave currentWave;
         private bool isSpawning = false;
+        public static int enemyAmount = -1;
         private int enemyIndex = -1;
         private float timeToWait = 0f;
         public delegate void SpawnEnemy(GameObject enemy);
@@ -20,6 +22,11 @@ namespace Prototyping.Scripts.Controllers
 
         private void OnDisable() {
             StartWave.startWaveEvent -= BeginWave;
+        }
+
+        private void Start() 
+        {
+            enemyAmount = currentWave.enemies.Count;
         }
 
         private void BeginWave()
@@ -47,6 +54,8 @@ namespace Prototyping.Scripts.Controllers
         private void Spawn()
         {
             GameObject newEnemy = Instantiate(currentWave.enemies[enemyIndex].enemy, gameObject.transform.position, Quaternion.identity);
+            bool isLastEnemy = (enemyIndex + 1) == currentWave.enemies.Count;
+            if (isLastEnemy) newEnemy.GetComponent<EnemyHealthManager>().isLastEnemy = true;
             spawnEnemyEvent?.Invoke(newEnemy);
         }
 

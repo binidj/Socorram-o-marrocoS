@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using Prototyping.Scripts.ScriptableObjects;
 using UnityEngine.EventSystems;
+using Prototyping.Scripts.Entities;
 
 namespace Prototyping.Scripts.Controllers
 {
@@ -16,6 +17,7 @@ namespace Prototyping.Scripts.Controllers
         private Vector3 mousePosition = new Vector3();
         private Vector3Int lastPosition = new Vector3Int(100, 100, 0);
         private Vector3Int tilePosition = new Vector3Int();
+        private List<Transform> tileCells = new List<Transform>();
         [SerializeField] LevelConfig levelConfig;
         private Dictionary<GameObject, int> trapCount = new Dictionary<GameObject, int>();
         private Dictionary<GameObject, List<GameObject>> trapInstances = new Dictionary<GameObject, List<GameObject>>();
@@ -46,8 +48,13 @@ namespace Prototyping.Scripts.Controllers
         {
             if (pathTilemap.GetTile(tilePosition) == null) return;
             if (currentTrap.GetComponentInChildren<TrapCollision>().isColliding) return;
-
-            
+            foreach (Transform transform in tileCells)
+            {
+                if (pathTilemap.GetTile(pathTilemap.WorldToCell(transform.position)) == null)
+                {
+                    return;
+                }
+            }
 
             // SpriteRenderer spriteRenderer = currentTrap.GetComponent<SpriteRenderer>();
             SpriteRenderer[] spriteRenderers = currentTrap.GetComponentsInChildren<SpriteRenderer>();
@@ -58,8 +65,11 @@ namespace Prototyping.Scripts.Controllers
                 spriteRenderer.color = color;
             }
             // spriteRenderer.color = color;
+            ITrap genericTrap = currentTrap.GetComponentInChildren<ITrap>();
+            if (genericTrap != null) genericTrap.isPlacing = false;
             currentTrap = null;
             selectedTrap = null;
+            tileCells.Clear();
         }
 
         private void RotateTrap()
@@ -87,10 +97,10 @@ namespace Prototyping.Scripts.Controllers
 
             if (HitUIComponent()) return;
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonUp(0))
                 PlaceTrap();
 
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButtonUp(1))
                 RotateTrap();
         }
 
@@ -100,14 +110,17 @@ namespace Prototyping.Scripts.Controllers
 
             if (currentTrap != null)
             {
+                ITrap genericTrap = currentTrap.GetComponentInChildren<ITrap>();
+                if (genericTrap != null) genericTrap.isPlacing = false;
                 currentTrap.transform.position = trapsPosition;
                 currentTrap.SetActive(false);
+                tileCells.Clear();
             }
             
             currentTrap = null;
             foreach (GameObject trapInstance in trapInstances[trap])
             {
-                if (!trapInstance.activeSelf)
+                if (!trapInstance.activeSelf && trapInstance.tag == "Pool")
                 {
                     currentTrap = trapInstance;
                     // SpriteRenderer spriteRenderer = currentTrap.GetComponent<SpriteRenderer>();
@@ -125,7 +138,23 @@ namespace Prototyping.Scripts.Controllers
             }
 
             if (currentTrap != null)
+            {
+                // for(int i = 0; i < gameobject.transform.GetChildCount(); i++)
+                //     Transform Children = gameobject.transform.GetChild(i);
+                // }
+                Transform root = currentTrap.transform.GetChild(1);
+                for (int i = 0; i < root.childCount; i++)
+                {
+                    tileCells.Add(root.GetChild(i).transform);
+                }
                 selectedTrap = trap;
+                ITrap genericTrap = currentTrap.GetComponentInChildren<ITrap>();
+                if (genericTrap != null) genericTrap.isPlacing = true;
+                // TriggeredTrap triggeredTrap = currentTrap.GetComponentInChildren<TriggeredTrap>();
+                // if (triggeredTrap != null)
+                //     triggeredTrap.isPlacing = true;
+            }
+                
         }
 
         public void ClearSelection()
@@ -135,6 +164,9 @@ namespace Prototyping.Scripts.Controllers
             currentTrap.SetActive(false);
             currentTrap = null;
             selectedTrap = null;
+            ITrap genericTrap = currentTrap.GetComponentInChildren<ITrap>();
+            if (genericTrap != null) genericTrap.isPlacing = false;
+            tileCells.Clear();
         }
     }
 }

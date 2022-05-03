@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 592543944247806158}
   - component: {fileID: 592543944247806157}
-  - component: {fileID: 301947360135352667}
   m_Layer: 0
   m_Name: GridManager
   m_TagString: Untagged
@@ -48,22 +47,31 @@ MonoBehaviour:
   startWaveBtn: {fileID: 0}
   pathTileMap: {fileID: 0}
   obstaclesTileMap: {fileID: 0}
-  tile: {fileID: 11400000, guid: 969ddd354f409a14e9fe00386a6854a3, type: 2}
   tilesPositions: []
   levelConfig: {fileID: 0}
   trapsController: {fileID: 0}
-  ignoreLayers: []
---- !u!114 &301947360135352667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 592543944247806156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 814b7461d62334e188b3a43681f700b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  linePrefab: {fileID: 1000013289361224, guid: 67db316532143b248b19bb424019b871, type: 3}
-  maxLines: 80
+  placeableDirections:
+  - {x: 1, y: 0, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: -1, y: 0, z: 0}
+  - {x: 0, y: -1, z: 0}
+  placeableTiles:
+  - {fileID: 11400000, guid: 7a64d9e2b035afb4bae33691340efa99, type: 2}
+  - {fileID: 11400000, guid: 9c2be67375cbf7541972888df2229d86, type: 2}
+  - {fileID: 11400000, guid: 7a64d9e2b035afb4bae33691340efa99, type: 2}
+  - {fileID: 11400000, guid: 9c2be67375cbf7541972888df2229d86, type: 2}
+  fixDirections:
+  - {x: 1, y: 1, z: 0}
+  - {x: -1, y: -1, z: 0}
+  - {x: 1, y: -1, z: 0}
+  - {x: -1, y: 1, z: 0}
+  fixTiles:
+  - {fileID: 11400000, guid: 90d8391e7f387d74199fac178d2186af, type: 2}
+  - {fileID: 11400000, guid: 07f60fe1b820a7549a84bb0d0962b137, type: 2}
+  - {fileID: 11400000, guid: d3c0acbc76e42c44aa5b0fa19c4103fa, type: 2}
+  - {fileID: 11400000, guid: b54a0f4c19cdee04cb42bc7c67c5d0f5, type: 2}
+  ignoreLayers:
+  - serializedVersion: 2
+    m_Bits: 128
+  - serializedVersion: 2
+    m_Bits: 132

@@ -14,16 +14,22 @@ namespace Prototyping.Scripts.Controllers
         [SerializeField] public Button startWaveBtn;
         [SerializeField] private Tilemap pathTileMap;
         [SerializeField] private Tilemap obstaclesTileMap;
-        [SerializeField] private Tile tile;
+        // [SerializeField] private Tile tile;
         [SerializeField] private List<Vector3Int> tilesPositions;
         [SerializeField] private LevelConfig levelConfig;
         [SerializeField] private TrapsController trapsController;
+        [SerializeField] private List<Vector3Int> placeableDirections;
+        [SerializeField] private List<Tile> placeableTiles;
+        [SerializeField] private List<Vector3Int> fixDirections;
+        [SerializeField] private List<Tile> fixTiles;
+        private Dictionary<Vector3Int, Tile> dirToTile;
+        private Dictionary<Vector3Int, Tile> dirFixTile;
         private int tilesLimit;
         private Vector3Int startPosition;
         private Vector3Int endPosition;
         [SerializeField] private LayerMask[] ignoreLayers;
         private LayerMask ignoreMask = new LayerMask();
-        private LineFactory lineFactory;
+        // private LineFactory lineFactory;
         private bool waveStarted = false;
         private int PathSize
         {
@@ -38,12 +44,42 @@ namespace Prototyping.Scripts.Controllers
             endPosition = levelConfig.endPosition;
             tilesLimit = levelConfig.tilesLimit;
             tilesPositions.Add(startPosition);
-            lineFactory = GetComponent<LineFactory>();
+            // lineFactory = GetComponent<LineFactory>();
             UpdateAvailableTilesText();
 
             foreach (LayerMask mask in ignoreLayers)
             {
                 ignoreMask |= mask.value;
+            }
+
+            dirToTile = new Dictionary<Vector3Int, Tile>();
+            for (int i = 0; i < placeableTiles.Count; i++)
+            {
+                dirToTile[placeableDirections[i]] = placeableTiles[i];
+            }
+
+            dirFixTile = new Dictionary<Vector3Int, Tile>();
+            for (int i = 0; i < fixTiles.Count; i++)
+            {
+                dirFixTile[fixDirections[i]] = fixTiles[i];
+            }
+        }
+
+        private Tile GetTile(Vector3Int tileLocation)
+        {
+            Vector3Int dir = tileLocation - tilesPositions.Last();
+            return dirToTile[dir];
+        }
+
+        private void FixPathBend(Vector3Int tileLocation)
+        {
+            if (tilesPositions.Count < 2) return;
+            Vector3Int dir1 = tilesPositions[tilesPositions.Count - 2] - tilesPositions[tilesPositions.Count - 1];
+            Vector3Int dir2 = tileLocation - tilesPositions[tilesPositions.Count - 1];
+            Vector3Int result = dir1 + dir2;
+            if (dirFixTile.ContainsKey(result))
+            {
+                pathTileMap.SetTile(tilesPositions[tilesPositions.Count - 1], dirFixTile[result]);
             }
         }
 
@@ -88,10 +124,14 @@ namespace Prototyping.Scripts.Controllers
             if (!CanPlaceTile(tileLocation)) return;
             if (CanCollideWithTower(mousePosition)) return;
             
-            lineFactory.GetLine(pathTileMap.GetCellCenterWorld(tileLocation), pathTileMap.GetCellCenterWorld(tilesPositions.Last()), 0.02f, new Color(255,0,0,1));
+            // lineFactory.GetLine(pathTileMap.GetCellCenterWorld(tileLocation), pathTileMap.GetCellCenterWorld(tilesPositions.Last()), 0.02f, new Color(255,0,0,1));
+            Tile tile = GetTile(tileLocation);
+            FixPathBend(tileLocation);
             pathTileMap.SetTile(tileLocation, tile);
             tilesPositions.Add(tileLocation);
             
+            if (IsPathCompleted()) FixPathBend(endPosition);
+
             UpdateAvailableTilesText();
         }
 
@@ -128,7 +168,7 @@ namespace Prototyping.Scripts.Controllers
                     gameObject.SetActive(false);
                 }
                 tilesPositions.RemoveAt(lastIndex-i);
-                lineFactory.RemoveLine();
+                // lineFactory.RemoveLine();
             }
             
             UpdateAvailableTilesText();
@@ -182,10 +222,10 @@ namespace Prototyping.Scripts.Controllers
         public void BeginWave()
         {
             waveStarted = true;
-            foreach (var position in tilesPositions)
-            {
-                lineFactory.RemoveLine();
-            }
+            // foreach (var position in tilesPositions)
+            // {
+            //     lineFactory.RemoveLine();
+            // }
         }
     }
 }

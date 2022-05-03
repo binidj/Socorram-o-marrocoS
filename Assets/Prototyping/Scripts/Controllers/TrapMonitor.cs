@@ -38,10 +38,7 @@ namespace Prototyping.Scripts.Controllers
                         if (!trap.isPlacing)
                         {
                             trap.Trigger();
-                            hit.collider.gameObject.SetActive(false);
-                            hit.collider.gameObject.tag = "Respawn";
                         }
-                        
                     }
                 }
             }

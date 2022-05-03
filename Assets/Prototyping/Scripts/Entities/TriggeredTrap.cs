@@ -12,6 +12,12 @@ namespace Prototyping.Scripts.Entities
         [field: SerializeField] public TrapType trapType { get; private set; }
         [field: SerializeField] public float value { get; private set; }
         [field: SerializeField] public float lifeSpan { get; private set; }
+        private Animator[] animators;
+
+        private void Start()
+        {
+            animators = transform.parent.GetComponentsInChildren<Animator>();    
+        }
 
         // private void OnEnable() 
         // {
@@ -54,6 +60,8 @@ namespace Prototyping.Scripts.Entities
 
         public void Trigger()
         {
+            isPlacing = true;
+
             ContactFilter2D filter = new ContactFilter2D().NoFilter();
             List<Collider2D> colliders = new List<Collider2D>();
             Physics2D.OverlapCollider(gameObject.GetComponent<Collider2D>(), filter, colliders);
@@ -70,8 +78,22 @@ namespace Prototyping.Scripts.Entities
                 }
             }
 
-            gameObject.transform.parent.gameObject.SetActive(false);
-            gameObject.transform.parent.gameObject.tag = "Respawn";
+            GameObject trap = gameObject.transform.parent.gameObject;
+            StartCoroutine(DestroyTrap(trap));
+            
+            // gameObject.transform.parent.gameObject.SetActive(false);
+            // gameObject.transform.parent.gameObject.tag = "Respawn";
+        }
+
+        IEnumerator DestroyTrap(GameObject trap)
+        {
+            foreach (var animator in animators)
+            {
+                animator.SetBool("triggerTrap", true);
+            }
+            yield return new WaitForSeconds(1.5f);
+            trap.SetActive(false);
+            trap.tag = "Respawn";
         }
     }
 }

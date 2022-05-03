@@ -13,6 +13,9 @@ namespace Prototyping.Scripts.Entities
         [SerializeField] private float deathAnimationTime = 2.0f;
         private bool dead = false;
         private EnemyMovement enemyMovement;
+        public bool isLastEnemy {get; set;} = false;
+        public delegate void EndLevel();
+        public static event EndLevel endLevelEvent;
 
         private void Start()
         {
@@ -47,6 +50,7 @@ namespace Prototyping.Scripts.Entities
         private IEnumerator Die()
         {
             yield return new WaitForSeconds(deathAnimationTime);
+            if (isLastEnemy) endLevelEvent?.Invoke();
             gameObject.SetActive(false);
         }
     }

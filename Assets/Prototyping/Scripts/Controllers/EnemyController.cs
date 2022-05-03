@@ -14,6 +14,7 @@ namespace Prototyping.Scripts.Controllers
         private Vector3 walkRightOffset = new Vector3(100000f, 0, 0);
         [SerializeField] private int playerHealth = 3;
         [SerializeField] private Text textHealth;
+        [SerializeField] private LevelController levelController;
 
         private void OnEnable() {
             EnemySpawner.spawnEnemyEvent += ReceiveEnemy;
@@ -66,6 +67,7 @@ namespace Prototyping.Scripts.Controllers
         private void DealDamageToPlayer()
         {
             playerHealth -= 1;
+            if (playerHealth <= 0) levelController.ReloadLevel();
             textHealth.text = $"Health: {playerHealth}";
         }
     }

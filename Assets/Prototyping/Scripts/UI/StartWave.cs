@@ -8,6 +8,7 @@ public class StartWave : MonoBehaviour
 {
     [SerializeField] private Button button;
     [SerializeField] private GameObject disableOnWaveStart;
+    [SerializeField] private GameObject activeOnWaveStart;
     public delegate void StartWaveEvent();
     public static event StartWaveEvent startWaveEvent;
 
@@ -20,5 +21,6 @@ public class StartWave : MonoBehaviour
     {
         startWaveEvent?.Invoke();
         disableOnWaveStart.SetActive(false);
+        activeOnWaveStart.SetActive(true);
     }
 }

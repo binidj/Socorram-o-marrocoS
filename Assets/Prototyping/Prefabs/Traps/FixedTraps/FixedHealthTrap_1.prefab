@@ -55,6 +55,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FixedHealthTrap_1
       objectReference: {fileID: 0}
+    - target: {fileID: 7742499929870867390, guid: 1610d3de522ab4d41ba9e9ad39b2d7eb, type: 3}
+      propertyPath: m_TagString
+      value: Pool
+      objectReference: {fileID: 0}
     - target: {fileID: 8711223501158166808, guid: 1610d3de522ab4d41ba9e9ad39b2d7eb, type: 3}
       propertyPath: <value>k__BackingField
       value: 100

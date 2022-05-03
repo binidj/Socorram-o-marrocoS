@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using Prototyping.Scripts.ScriptableObjects;
 using UnityEngine.EventSystems;
+using Prototyping.Scripts.Entities;
 
 namespace Prototyping.Scripts.Controllers
 {
@@ -58,6 +59,8 @@ namespace Prototyping.Scripts.Controllers
                 spriteRenderer.color = color;
             }
             // spriteRenderer.color = color;
+            ITrap genericTrap = currentTrap.GetComponentInChildren<ITrap>();
+            if (genericTrap != null) genericTrap.isPlacing = false;
             currentTrap = null;
             selectedTrap = null;
         }
@@ -87,10 +90,10 @@ namespace Prototyping.Scripts.Controllers
 
             if (HitUIComponent()) return;
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonUp(0))
                 PlaceTrap();
 
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButtonUp(1))
                 RotateTrap();
         }
 
@@ -100,6 +103,8 @@ namespace Prototyping.Scripts.Controllers
 
             if (currentTrap != null)
             {
+                ITrap genericTrap = currentTrap.GetComponentInChildren<ITrap>();
+                if (genericTrap != null) genericTrap.isPlacing = false;
                 currentTrap.transform.position = trapsPosition;
                 currentTrap.SetActive(false);
             }
@@ -107,7 +112,7 @@ namespace Prototyping.Scripts.Controllers
             currentTrap = null;
             foreach (GameObject trapInstance in trapInstances[trap])
             {
-                if (!trapInstance.activeSelf)
+                if (!trapInstance.activeSelf && trapInstance.tag == "Pool")
                 {
                     currentTrap = trapInstance;
                     // SpriteRenderer spriteRenderer = currentTrap.GetComponent<SpriteRenderer>();
@@ -125,7 +130,15 @@ namespace Prototyping.Scripts.Controllers
             }
 
             if (currentTrap != null)
+            {
                 selectedTrap = trap;
+                ITrap genericTrap = currentTrap.GetComponentInChildren<ITrap>();
+                if (genericTrap != null) genericTrap.isPlacing = true;
+                // TriggeredTrap triggeredTrap = currentTrap.GetComponentInChildren<TriggeredTrap>();
+                // if (triggeredTrap != null)
+                //     triggeredTrap.isPlacing = true;
+            }
+                
         }
 
         public void ClearSelection()

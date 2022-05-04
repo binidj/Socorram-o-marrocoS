@@ -22,6 +22,8 @@ namespace Prototyping.Scripts.Controllers
         private Dictionary<GameObject, int> trapCount = new Dictionary<GameObject, int>();
         private Dictionary<GameObject, List<GameObject>> trapInstances = new Dictionary<GameObject, List<GameObject>>();
         private Vector3 trapsPosition = new Vector3(100f, 100f, 0f);
+        public delegate void UpdateButtonCount(GameObject trap);
+        public static event UpdateButtonCount updateButtonCount;
         // private readonly Vector3 tileOffset = new Vector3(0.5f, 0.5f, 0);
 
         private void Awake()
@@ -55,7 +57,8 @@ namespace Prototyping.Scripts.Controllers
                     return;
                 }
             }
-
+            
+            updateButtonCount?.Invoke(selectedTrap);
             // SpriteRenderer spriteRenderer = currentTrap.GetComponent<SpriteRenderer>();
             SpriteRenderer[] spriteRenderers = currentTrap.GetComponentsInChildren<SpriteRenderer>();
             foreach (var spriteRenderer in spriteRenderers)
@@ -162,10 +165,10 @@ namespace Prototyping.Scripts.Controllers
             if (!isPlacingTrap) return;
             currentTrap.transform.position = trapsPosition;
             currentTrap.SetActive(false);
-            currentTrap = null;
-            selectedTrap = null;
             ITrap genericTrap = currentTrap.GetComponentInChildren<ITrap>();
             if (genericTrap != null) genericTrap.isPlacing = false;
+            currentTrap = null;
+            selectedTrap = null;
             tileCells.Clear();
         }
     }

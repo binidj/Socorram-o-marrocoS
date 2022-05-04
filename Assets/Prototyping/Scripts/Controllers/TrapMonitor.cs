@@ -8,6 +8,7 @@ namespace Prototyping.Scripts.Controllers
     public class TrapMonitor : MonoBehaviour
     {
         private bool waveStarted = false;
+        [SerializeField] TrapsController trapsController;
         private void OnEnable() 
         {
             StartWave.startWaveEvent += OnWaveStart;
@@ -25,7 +26,7 @@ namespace Prototyping.Scripts.Controllers
 
         private void Update()
         {
-            if (waveStarted)
+            if (waveStarted && !trapsController.isPlacingTrap)
             {
                 if (Input.GetMouseButtonUp(0))
                 {

@@ -175,6 +175,7 @@ namespace Prototyping.Scripts.Controllers
                 // lineFactory.RemoveLine();
             }
             
+            audioSource.Play();
             UpdateAvailableTilesText();
         }
         

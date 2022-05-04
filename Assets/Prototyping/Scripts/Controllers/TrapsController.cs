@@ -24,6 +24,7 @@ namespace Prototyping.Scripts.Controllers
         private Vector3 trapsPosition = new Vector3(100f, 100f, 0f);
         public delegate void UpdateButtonCount(GameObject trap);
         public static event UpdateButtonCount updateButtonCount;
+        private AudioSource audioSource;
         // private readonly Vector3 tileOffset = new Vector3(0.5f, 0.5f, 0);
 
         private void Awake()
@@ -40,6 +41,8 @@ namespace Prototyping.Scripts.Controllers
                     trapInstances[trapData.trap].Add(newInstance);
                 }
             }
+
+            audioSource = GetComponent<AudioSource>();
         }
         
         public bool isPlacingTrap { 
@@ -73,6 +76,8 @@ namespace Prototyping.Scripts.Controllers
             currentTrap = null;
             selectedTrap = null;
             tileCells.Clear();
+
+            audioSource.Play();
         }
 
         private void RotateTrap()

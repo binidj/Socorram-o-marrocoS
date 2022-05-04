@@ -17,9 +17,11 @@ namespace Prototyping.Scripts.Entities
         public bool isLastEnemy {get; set;} = false;
         public delegate void UpdateDeathCount();
         public static event UpdateDeathCount updateDeathCountEvent;
+        private AudioSource audioSource;
 
         private void Start()
         {
+            audioSource = GetComponent<AudioSource>();
             animator = gameObject.GetComponent<Animator>();
             enemyMovement = gameObject.GetComponent<EnemyMovement>();
             health = enemyStats.health;
@@ -53,6 +55,7 @@ namespace Prototyping.Scripts.Entities
 
         private IEnumerator Die()
         {
+            audioSource.PlayDelayed(0.5f);
             updateDeathCountEvent?.Invoke();
             yield return new WaitForSeconds(deathAnimationTime);
             gameObject.SetActive(false);

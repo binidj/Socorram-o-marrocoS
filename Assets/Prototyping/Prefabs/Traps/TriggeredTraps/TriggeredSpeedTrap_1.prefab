@@ -31,6 +31,18 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 22100000, guid: 47e652bb9f64a0349992ddefdb6de925, type: 2}
+    - target: {fileID: 6098508455900802767, guid: 1610d3de522ab4d41ba9e9ad39b2d7eb, type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098508455900802767, guid: 1610d3de522ab4d41ba9e9ad39b2d7eb, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 404b843d2679840489c41a887f1ee002, type: 3}
+    - target: {fileID: 6098508455900802767, guid: 1610d3de522ab4d41ba9e9ad39b2d7eb, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6270275868505433643, guid: 1610d3de522ab4d41ba9e9ad39b2d7eb, type: 3}
       propertyPath: m_Sprite
       value: 

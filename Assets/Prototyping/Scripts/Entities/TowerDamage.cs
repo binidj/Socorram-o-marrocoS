@@ -11,9 +11,11 @@ namespace Prototyping.Scripts.Entities
         [SerializeField] TowerStats towerStats;
         List<GameObject> activeEnemies = new List<GameObject>();
         private Animator animator;
+        private AudioSource audioSource;
 
         private void Start()
         {
+            audioSource = GetComponent<AudioSource>();
             damagePerSecond = towerStats.damagePerSecond;
             animator = transform.parent.gameObject.GetComponentInChildren<Animator>();
         }
@@ -27,7 +29,12 @@ namespace Prototyping.Scripts.Entities
                 
             if (activeEnemies.Count > 0)
             {
+                if (!audioSource.isPlaying) audioSource.Play();
                 activeEnemies[0].GetComponent<EnemyHealthManager>()?.TakeDamage(damagePerSecond * Time.deltaTime);
+            }
+            else
+            {
+                if (audioSource.isPlaying) audioSource.Stop();
             }
             // foreach (GameObject gameObject in activeEnemies)
             // {

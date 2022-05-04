@@ -13,9 +13,11 @@ namespace Prototyping.Scripts.Entities
         [field: SerializeField] public float value { get; private set; }
         [field: SerializeField] public float lifeSpan { get; private set; }
         private Animator[] animators;
+        private AudioSource audioSource;
 
         private void Start()
         {
+            audioSource = GetComponent<AudioSource>();
             animators = transform.parent.GetComponentsInChildren<Animator>();    
         }
 
@@ -60,8 +62,9 @@ namespace Prototyping.Scripts.Entities
 
         public void Trigger()
         {
+            audioSource.Play();
             isPlacing = true;
-
+            
             ContactFilter2D filter = new ContactFilter2D().NoFilter();
             List<Collider2D> colliders = new List<Collider2D>();
             Physics2D.OverlapCollider(gameObject.GetComponent<Collider2D>(), filter, colliders);

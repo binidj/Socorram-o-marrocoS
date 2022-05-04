@@ -29,6 +29,7 @@ namespace Prototyping.Scripts.Controllers
         private Vector3Int endPosition;
         [SerializeField] private LayerMask[] ignoreLayers;
         private LayerMask ignoreMask = new LayerMask();
+        private AudioSource audioSource;
         // private LineFactory lineFactory;
         private bool waveStarted = false;
         private int PathSize
@@ -40,6 +41,7 @@ namespace Prototyping.Scripts.Controllers
         }
         private void Start()
         {
+            audioSource = GetComponent<AudioSource>();
             startPosition = levelConfig.startPosition;
             endPosition = levelConfig.endPosition;
             tilesLimit = levelConfig.tilesLimit;
@@ -133,6 +135,8 @@ namespace Prototyping.Scripts.Controllers
             if (IsPathCompleted()) FixPathBend(endPosition);
 
             UpdateAvailableTilesText();
+
+            audioSource.Play();
         }
 
         private bool CanCollideWithTower(Vector3 mousePosition)

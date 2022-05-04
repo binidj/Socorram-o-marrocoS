@@ -1,7 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Prototyping.Scripts.ScriptableObjects;
+using UnityEngine.UI;
 
 namespace Prototyping.Scripts.Entities
 {
@@ -13,6 +13,7 @@ namespace Prototyping.Scripts.Entities
         [SerializeField] private float deathAnimationTime = 2.0f;
         private bool dead = false;
         private EnemyMovement enemyMovement;
+        [SerializeField] private Slider _slider;
         public bool isLastEnemy {get; set;} = false;
         public delegate void UpdateDeathCount();
         public static event UpdateDeathCount updateDeathCountEvent;
@@ -23,12 +24,15 @@ namespace Prototyping.Scripts.Entities
             enemyMovement = gameObject.GetComponent<EnemyMovement>();
             health = enemyStats.health;
             animator.SetFloat("Health", health);
+            _slider.maxValue = health;
+            _slider.value = health;
         }
 
         public void TakeDamage(float damage)
         {
             if (dead) return;
             health -= damage;
+            _slider.value = health;
             animator.SetFloat("Health", health);
             if (health <= 0)
             {

@@ -1445,6 +1445,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6693329301213497098, guid: 8033c36f1fe436942b13dc9ad79fe3e2, type: 3}
+      propertyPath: trapsController
+      value: 
+      objectReference: {fileID: 2042746544}
     - target: {fileID: 6693329301213497100, guid: 8033c36f1fe436942b13dc9ad79fe3e2, type: 3}
       propertyPath: m_Name
       value: TrapMonitor

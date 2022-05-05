@@ -9,12 +9,11 @@ namespace Prototyping.Scripts.Controllers
 {
     public class GridController : MonoBehaviour
     {
-        // TODO : Move UI code to UI class
         [SerializeField] private Text tilesCountTxt;
         [SerializeField] public Button startWaveBtn;
         [SerializeField] private Tilemap pathTileMap;
         [SerializeField] private Tilemap obstaclesTileMap;
-        // [SerializeField] private Tile tile;
+        [SerializeField] private Tilemap towersTileMap;
         [SerializeField] private List<Vector3Int> tilesPositions;
         [SerializeField] private LevelConfig levelConfig;
         [SerializeField] private TrapsController trapsController;
@@ -32,7 +31,9 @@ namespace Prototyping.Scripts.Controllers
         [SerializeField] private LayerMask[] ignoreLayers;
         private LayerMask ignoreMask = new LayerMask();
         private AudioSource audioSource;
-        // private LineFactory lineFactory;
+        private List<GameObject> possibleMoves = new List<GameObject>();
+        [SerializeField] private GameObject squareZone;
+        [SerializeField] Tile towerMarker;
         private bool waveStarted = false;
         private int PathSize
         {
@@ -68,6 +69,39 @@ namespace Prototyping.Scripts.Controllers
             for (int i = 0; i < fixTiles.Count; i++)
             {
                 dirFixTile[fixDirections[i]] = fixTiles[i];
+            }
+
+            for (int i = 0; i < placeableTiles.Count; i++)
+            {
+                possibleMoves.Add(Instantiate(squareZone, new Vector3(-1000, -1000, 0f), Quaternion.identity));
+            }
+            FixPossibleMoves();
+
+            foreach (Transform child in towersTileMap.gameObject.transform)
+            {
+                Vector3Int position = towersTileMap.WorldToCell(child.transform.position);
+                towersTileMap.SetTile(position, towerMarker);
+            }
+        }
+
+        private void FixPossibleMoves()
+        {
+            foreach (var square in possibleMoves)
+            {
+                square.SetActive(false);
+            }
+
+            int squareIndex = 0;
+            foreach (var direction in placeableDirections)
+            {
+                Vector3Int position = tilesPositions.Last() + direction;
+                Vector3 center = pathTileMap.GetCellCenterWorld(position);
+                if (CanPlaceTile(position) && !CanCollideWithTower(center))
+                {
+                    possibleMoves[squareIndex].transform.position = center;
+                    possibleMoves[squareIndex].SetActive(true);
+                    squareIndex += 1;
+                }
             }
         }
 
@@ -107,7 +141,7 @@ namespace Prototyping.Scripts.Controllers
         {
             if (waveStarted) return;
 
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0) || Input.GetMouseButton(0))
                 SetTileAtMousePosition();
 
             if (Input.GetMouseButtonUp(1))
@@ -118,6 +152,7 @@ namespace Prototyping.Scripts.Controllers
         {
             if (pathTileMap.GetTile(tileLocation) == null && 
                 obstaclesTileMap.GetTile(tileLocation) == null &&
+                towersTileMap.GetTile(tileLocation) == null &&
                 IsLastTileNeighbor(tileLocation) && 
                 tileLocation.x <= upperLimit.x &&
                 tileLocation.y <= upperLimit.y &&
@@ -149,6 +184,7 @@ namespace Prototyping.Scripts.Controllers
             UpdateAvailableTilesText();
 
             audioSource.Play();
+            FixPossibleMoves();
         }
 
         private bool CanCollideWithTower(Vector3 mousePosition)
@@ -189,6 +225,7 @@ namespace Prototyping.Scripts.Controllers
             
             audioSource.Play();
             UpdateAvailableTilesText();
+            FixPossibleMoves();
         }
         
         private void UpdateAvailableTilesText()

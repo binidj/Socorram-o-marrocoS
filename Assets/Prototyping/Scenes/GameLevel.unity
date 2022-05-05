@@ -373,6 +373,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1595972393}
     - target: {fileID: 592543944247806157, guid: bab760a92d8b699419705c70c8363a66, type: 3}
+      propertyPath: towerMarker
+      value: 
+      objectReference: {fileID: 11400000, guid: 6d1088c1f5cbab3408c25dc142e065f0, type: 2}
+    - target: {fileID: 592543944247806157, guid: bab760a92d8b699419705c70c8363a66, type: 3}
       propertyPath: startWaveBtn
       value: 
       objectReference: {fileID: 976840416}
@@ -380,6 +384,10 @@ PrefabInstance:
       propertyPath: tilesCountTxt
       value: 
       objectReference: {fileID: 228630839}
+    - target: {fileID: 592543944247806157, guid: bab760a92d8b699419705c70c8363a66, type: 3}
+      propertyPath: towersTileMap
+      value: 
+      objectReference: {fileID: 415677177}
     - target: {fileID: 592543944247806157, guid: bab760a92d8b699419705c70c8363a66, type: 3}
       propertyPath: towersTilemap
       value: 

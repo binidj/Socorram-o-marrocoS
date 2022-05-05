@@ -73,6 +73,8 @@ namespace Prototyping.Scripts.Controllers
             // spriteRenderer.color = color;
             ITrap genericTrap = currentTrap.GetComponentInChildren<ITrap>();
             if (genericTrap != null) genericTrap.isPlacing = false;
+            if (genericTrap is TriggeredTrap)
+                StartCoroutine((genericTrap as TriggeredTrap).EnableTrap());
             currentTrap = null;
             selectedTrap = null;
             tileCells.Clear();

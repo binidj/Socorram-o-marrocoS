@@ -179,12 +179,17 @@ namespace Prototyping.Scripts.Controllers
             pathTileMap.SetTile(tileLocation, tile);
             tilesPositions.Add(tileLocation);
             
-            if (IsPathCompleted()) FixPathBend(endPosition);
+            FixPossibleMoves();
+
+            if (IsPathCompleted()) 
+            {
+                ClearPossibleMoves();
+                FixPathBend(endPosition);  
+            }
 
             UpdateAvailableTilesText();
 
             audioSource.Play();
-            FixPossibleMoves();
         }
 
         private bool CanCollideWithTower(Vector3 mousePosition)
@@ -220,7 +225,6 @@ namespace Prototyping.Scripts.Controllers
                     gameObject.SetActive(false);
                 }
                 tilesPositions.RemoveAt(lastIndex-i);
-                // lineFactory.RemoveLine();
             }
             
             audioSource.Play();
@@ -276,10 +280,15 @@ namespace Prototyping.Scripts.Controllers
         public void BeginWave()
         {
             waveStarted = true;
-            // foreach (var position in tilesPositions)
-            // {
-            //     lineFactory.RemoveLine();
-            // }
+            ClearPossibleMoves();
+        }
+
+        private void ClearPossibleMoves()
+        {
+            foreach (var square in possibleMoves)
+            {
+                square.SetActive(false);
+            }
         }
     }
 }

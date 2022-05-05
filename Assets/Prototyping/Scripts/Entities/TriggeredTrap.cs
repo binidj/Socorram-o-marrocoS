@@ -21,45 +21,6 @@ namespace Prototyping.Scripts.Entities
             animators = transform.parent.GetComponentsInChildren<Animator>();    
         }
 
-        // private void OnEnable() 
-        // {
-        //     StartWave.startWaveEvent += EnableTriggerTrap;
-        // }
-
-        // private void OnDisable() 
-        // {
-        //     StartWave.startWaveEvent -= EnableTriggerTrap;
-        // }
-
-        // private void EnableTriggerTrap()
-        // {
-        //     canTriggerTrap = true;
-        // }
-
-        // private void OnMouseUp() 
-        // {
-        //     if (isPlacing) return;
-        //     // if (!canTriggerTrap) return;
-        //     // canTriggerTrap = false;
-            
-        //     if (Input.GetMouseButtonUp(0))
-        //     {
-        //         Vector3 mousePosition = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
-        //         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 15f, LayerMask.GetMask("Traps"));
-
-        //         if (hit.collider != null)
-        //         {
-
-        //         }
-        //         Trigger();
-
-        //         gameObject.transform.parent.gameObject.SetActive(false);
-        //         gameObject.transform.parent.gameObject.tag = "Respawn";
-        //     }
-            
-        //     // Destroy(gameObject.transform.parent.gameObject);
-        // }
-
         public void Trigger()
         {
             if (firstClick) 
@@ -88,9 +49,6 @@ namespace Prototyping.Scripts.Entities
 
             GameObject trap = gameObject.transform.parent.gameObject;
             StartCoroutine(DestroyTrap(trap));
-            
-            // gameObject.transform.parent.gameObject.SetActive(false);
-            // gameObject.transform.parent.gameObject.tag = "Respawn";
         }
 
         IEnumerator DestroyTrap(GameObject trap)
@@ -102,6 +60,12 @@ namespace Prototyping.Scripts.Entities
             yield return new WaitForSeconds(1.5f);
             trap.SetActive(false);
             trap.tag = "Respawn";
+        }
+
+        public IEnumerator EnableTrap()
+        {
+            yield return new WaitForSeconds(0.1f);
+            firstClick = false;
         }
     }
 }

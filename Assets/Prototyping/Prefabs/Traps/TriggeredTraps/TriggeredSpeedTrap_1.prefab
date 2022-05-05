@@ -127,5 +127,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <trapType>k__BackingField: 0
-  <value>k__BackingField: 0.5
-  <lifeSpan>k__BackingField: 6
+  <value>k__BackingField: 0.25
+  <lifeSpan>k__BackingField: 5

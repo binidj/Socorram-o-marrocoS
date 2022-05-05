@@ -27,6 +27,8 @@ namespace Prototyping.Scripts.Controllers
         private int tilesLimit;
         private Vector3Int startPosition;
         private Vector3Int endPosition;
+        private Vector3Int lowerLimit;
+        private Vector3Int upperLimit;
         [SerializeField] private LayerMask[] ignoreLayers;
         private LayerMask ignoreMask = new LayerMask();
         private AudioSource audioSource;
@@ -44,6 +46,8 @@ namespace Prototyping.Scripts.Controllers
             audioSource = GetComponent<AudioSource>();
             startPosition = levelConfig.startPosition;
             endPosition = levelConfig.endPosition;
+            lowerLimit = levelConfig.lowerLimit;
+            upperLimit = levelConfig.upperLimit;
             tilesLimit = levelConfig.tilesLimit;
             tilesPositions.Add(startPosition);
             // lineFactory = GetComponent<LineFactory>();
@@ -83,6 +87,10 @@ namespace Prototyping.Scripts.Controllers
             {
                 pathTileMap.SetTile(tilesPositions[tilesPositions.Count - 1], dirFixTile[result]);
             }
+            else if (dirToTile.ContainsKey(dir2))
+            {
+                pathTileMap.SetTile(tilesPositions[tilesPositions.Count - 1], dirToTile[dir2]);
+            }
         }
 
         private void OnEnable() 
@@ -110,7 +118,11 @@ namespace Prototyping.Scripts.Controllers
         {
             if (pathTileMap.GetTile(tileLocation) == null && 
                 obstaclesTileMap.GetTile(tileLocation) == null &&
-                IsLastTileNeighbor(tileLocation))
+                IsLastTileNeighbor(tileLocation) && 
+                tileLocation.x <= upperLimit.x &&
+                tileLocation.y <= upperLimit.y &&
+                tileLocation.x >= lowerLimit.x &&
+                tileLocation.y >= lowerLimit.y)
             {
                 return true;
             }

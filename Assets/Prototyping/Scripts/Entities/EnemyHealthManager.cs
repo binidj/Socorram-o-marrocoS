@@ -11,7 +11,7 @@ namespace Prototyping.Scripts.Entities
         [SerializeField] private EnemyStats enemyStats;
         private Animator animator;
         [SerializeField] private float deathAnimationTime = 2.0f;
-        private bool dead = false;
+        public bool dead {get; set;} = false;
         private EnemyMovement enemyMovement;
         [SerializeField] private Slider _slider;
         public bool isLastEnemy {get; set;} = false;

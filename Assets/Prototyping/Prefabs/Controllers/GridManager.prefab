@@ -71,6 +71,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 07f60fe1b820a7549a84bb0d0962b137, type: 2}
   - {fileID: 11400000, guid: d3c0acbc76e42c44aa5b0fa19c4103fa, type: 2}
   - {fileID: 11400000, guid: b54a0f4c19cdee04cb42bc7c67c5d0f5, type: 2}
+  fixLineTiles:
+  - {fileID: 11400000, guid: 7a64d9e2b035afb4bae33691340efa99, type: 2}
+  - {fileID: 11400000, guid: 7a64d9e2b035afb4bae33691340efa99, type: 2}
+  - {fileID: 11400000, guid: 9c2be67375cbf7541972888df2229d86, type: 2}
+  - {fileID: 11400000, guid: 9c2be67375cbf7541972888df2229d86, type: 2}
   ignoreLayers:
   - serializedVersion: 2
     m_Bits: 128

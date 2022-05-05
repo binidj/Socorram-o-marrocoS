@@ -18,5 +18,7 @@ namespace Prototyping.Scripts.ScriptableObjects
         public Vector3Int endPosition;
         public int tilesLimit;
         public List<TrapData> trapsAvailable;
+        public Vector3Int lowerLimit;
+        public Vector3Int upperLimit; 
     }
 }

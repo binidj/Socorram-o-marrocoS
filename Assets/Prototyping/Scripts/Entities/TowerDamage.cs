@@ -27,10 +27,22 @@ namespace Prototyping.Scripts.Entities
             else
                 animator.SetBool("enemiesInside", false);
                 
-            if (activeEnemies.Count > 0)
+            EnemyHealthManager validEnemy = null;
+
+            foreach (var enemy in activeEnemies)
+            {
+                EnemyHealthManager enemyHealth = enemy.GetComponent<EnemyHealthManager>();
+                if (enemy.activeSelf && !enemyHealth.dead)
+                {
+                    validEnemy = enemyHealth;
+                    break;
+                }
+            }
+            
+            if (validEnemy != null)
             {
                 if (!audioSource.isPlaying) audioSource.Play();
-                activeEnemies[0].GetComponent<EnemyHealthManager>()?.TakeDamage(damagePerSecond * Time.deltaTime);
+                validEnemy.TakeDamage(damagePerSecond * Time.deltaTime);
             }
             else
             {

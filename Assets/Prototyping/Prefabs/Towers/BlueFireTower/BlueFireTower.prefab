@@ -75,6 +75,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.20936593
       objectReference: {fileID: 0}
+    - target: {fileID: 3948154285337361744, guid: 4e2c0754fe649bf4d8b757c2ea3baf84, type: 3}
+      propertyPath: towerStats
+      value: 
+      objectReference: {fileID: 11400000, guid: 0514f0bea4d1ee344a249b52e9474677, type: 2}
     - target: {fileID: 3956968968068141236, guid: 4e2c0754fe649bf4d8b757c2ea3baf84, type: 3}
       propertyPath: m_Color.b
       value: 0.6792453

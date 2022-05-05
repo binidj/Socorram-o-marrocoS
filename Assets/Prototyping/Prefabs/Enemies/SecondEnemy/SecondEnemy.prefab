@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SecondEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 3780047871578862460, guid: 5a9bd03722f8ec449a6c1c556df37fa7, type: 3}
+      propertyPath: enemyStats
+      value: 
+      objectReference: {fileID: 11400000, guid: ba8352911b7659947a391ba7afb516ec, type: 2}
     - target: {fileID: 4141571545821382220, guid: 5a9bd03722f8ec449a6c1c556df37fa7, type: 3}
       propertyPath: m_Controller
       value: 
@@ -19,6 +23,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 5796780468118526985, guid: 9621533ed1545ba43a15d5d7680a3606, type: 3}
+    - target: {fileID: 5044637364994137117, guid: 5a9bd03722f8ec449a6c1c556df37fa7, type: 3}
+      propertyPath: enemyStats
+      value: 
+      objectReference: {fileID: 11400000, guid: ba8352911b7659947a391ba7afb516ec, type: 2}
     - target: {fileID: 5157754480007115795, guid: 5a9bd03722f8ec449a6c1c556df37fa7, type: 3}
       propertyPath: m_RootOrder
       value: 0

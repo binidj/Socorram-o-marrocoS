@@ -7,7 +7,7 @@ namespace Prototyping.Scripts.Entities
 {
     public class TriggeredTrap : MonoBehaviour, ITrap
     {
-        // private bool canTriggerTrap = true;
+        private bool firstClick = true;
         public bool isPlacing {get; set;} = false;
         [field: SerializeField] public TrapType trapType { get; private set; }
         [field: SerializeField] public float value { get; private set; }
@@ -62,6 +62,11 @@ namespace Prototyping.Scripts.Entities
 
         public void Trigger()
         {
+            if (firstClick) 
+            {
+                firstClick = false;
+                return;
+            }
             audioSource.Play();
             isPlacing = true;
             

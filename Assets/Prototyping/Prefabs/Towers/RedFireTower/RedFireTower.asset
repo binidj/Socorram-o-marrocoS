@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dfc6ee04e5caea94c91474c7ee9fb5e1, type: 3}
-  m_Name: BlueFireTower
+  m_Name: RedFireTower
   m_EditorClassIdentifier: 
-  damagePerSecond: 9
+  damagePerSecond: 4.5

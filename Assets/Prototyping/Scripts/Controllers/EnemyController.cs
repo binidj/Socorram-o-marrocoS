@@ -16,13 +16,21 @@ namespace Prototyping.Scripts.Controllers
         [SerializeField] private Text textHealth;
         [SerializeField] private LevelController levelController;
         private int deathCount = 0;
+        [SerializeField] private GameObject victoryUI;
+        [SerializeField] private GameObject defeatUI;
+        [SerializeField] private AudioClip victorySound;
+        [SerializeField] private AudioClip defeatSound;
+        [SerializeField] private GameObject placeableUI;
+        [SerializeField] private AudioSource background;
+        private AudioSource audioSource;
+        private bool levelEnded = false;
 
         public void UpdateDeathCount()
         {
             deathCount += 1;
             if (deathCount == EnemySpawner.enemyAmount)
             {
-                levelController.GoToNextLevel();
+                if (!defeatUI.activeSelf) SetEndLevelUI(victoryUI, victorySound);
             }
         }
 
@@ -42,6 +50,7 @@ namespace Prototyping.Scripts.Controllers
         private void Start()
         {
             textHealth.text = $"Health: {playerHealth}";
+            audioSource = GetComponent<AudioSource>();
         }
 
         private void ReceiveEnemy(GameObject newEnemy)
@@ -49,6 +58,7 @@ namespace Prototyping.Scripts.Controllers
             enemies.Add(newEnemy);
             EnemyMovement enemyMovement = newEnemy.GetComponent<EnemyMovement>();
             enemyMovement.SetController(this);
+            if (levelEnded) newEnemy.SetActive(false);
         }
 
         private void GetPathPositions()
@@ -85,7 +95,8 @@ namespace Prototyping.Scripts.Controllers
             playerHealth -= 1;
             if (playerHealth == 0) 
             {
-                levelController.ReloadLevel();
+                if (!defeatUI.activeSelf) SetEndLevelUI(defeatUI, defeatSound);
+                textHealth.text = $"Health: {playerHealth}";
                 return true;
             }
             else if (playerHealth < 0)
@@ -94,6 +105,25 @@ namespace Prototyping.Scripts.Controllers
             }
             textHealth.text = $"Health: {playerHealth}";
             return false;
+        }
+
+        private void SetEndLevelUI(GameObject nextUI, AudioClip audioClip)
+        {
+            StopEnemies();
+            levelEnded = true;
+            placeableUI.SetActive(false);
+            background.Stop();
+            audioSource.clip = audioClip;
+            audioSource.Play();
+            nextUI.SetActive(true);
+        }
+
+        private void StopEnemies()
+        {
+            foreach (var enemy in enemies)
+            {
+                enemy.SetActive(false);
+            }
         }
     }
 }

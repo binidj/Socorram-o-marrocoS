@@ -84,7 +84,10 @@ namespace Prototyping.Scripts.Controllers
 
         private void RotateTrap()
         {
-            currentTrap.transform.Rotate(0f, 0f, 90f);
+            if (currentTrap.transform.rotation == Quaternion.identity)
+                currentTrap.transform.Rotate(0f, 0f, 90f);
+            else
+                currentTrap.transform.rotation = Quaternion.identity;
         }
 
         private bool HitUIComponent()

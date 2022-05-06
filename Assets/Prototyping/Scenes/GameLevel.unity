@@ -1455,6 +1455,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 900694004456656856, guid: cb4df316fec616849b45f39720d5207f, type: 3}
+      propertyPath: baseEnemy
+      value: 
+      objectReference: {fileID: 8861877568368221673, guid: 3cfbbd18d0acb454389ac2debc861fc4, type: 3}
+    - target: {fileID: 900694004456656856, guid: cb4df316fec616849b45f39720d5207f, type: 3}
       propertyPath: currentWave
       value: 
       objectReference: {fileID: 11400000, guid: 2809658a7dd62ff48a7fa623038c0db5, type: 2}

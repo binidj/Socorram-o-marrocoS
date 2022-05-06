@@ -15,6 +15,8 @@ namespace Prototyping.Scripts.Controllers
         private float timeToWait = 0f;
         public delegate void SpawnEnemy(GameObject enemy);
         public static event SpawnEnemy spawnEnemyEvent;
+        private List<GameObject> enemies;
+        [SerializeField] private GameObject baseEnemy;
 
         private void OnEnable() {
             StartWave.startWaveEvent += BeginWave;
@@ -22,6 +24,16 @@ namespace Prototyping.Scripts.Controllers
 
         private void OnDisable() {
             StartWave.startWaveEvent -= BeginWave;
+        }
+
+        private void Awake()
+        {
+            baseEnemy.SetActive(false);
+            enemies = new List<GameObject>();
+            foreach (var enemyData in currentWave.enemies)
+            {
+                enemies.Add(Instantiate(enemyData.enemy, transform.position, Quaternion.identity));
+            }
         }
 
         private void Start() 
@@ -53,7 +65,8 @@ namespace Prototyping.Scripts.Controllers
 
         private void Spawn()
         {
-            GameObject newEnemy = Instantiate(currentWave.enemies[enemyIndex].enemy, gameObject.transform.position, Quaternion.identity);
+            GameObject newEnemy = enemies[enemyIndex]; //Instantiate(currentWave.enemies[enemyIndex].enemy, gameObject.transform.position, Quaternion.identity);
+            newEnemy.SetActive(true);
             bool isLastEnemy = (enemyIndex + 1) == currentWave.enemies.Count;
             if (isLastEnemy) newEnemy.GetComponent<EnemyHealthManager>().isLastEnemy = true;
             spawnEnemyEvent?.Invoke(newEnemy);

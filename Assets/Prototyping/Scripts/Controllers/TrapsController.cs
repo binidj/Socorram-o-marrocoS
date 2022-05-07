@@ -48,19 +48,26 @@ namespace Prototyping.Scripts.Controllers
         public bool isPlacingTrap { 
             get { return selectedTrap != null; } 
         }
-        
-        private void PlaceTrap()
+
+        private bool CanPlaceTrap()
         {
-            if (pathTilemap.GetTile(tilePosition) == null) return;
-            if (currentTrap.GetComponentInChildren<TrapCollision>().isColliding) return;
+            if (pathTilemap.GetTile(tilePosition) == null) return false;
+            if (currentTrap.GetComponentInChildren<TrapCollision>().isColliding) return false;
             foreach (Transform transform in tileCells)
             {
                 if (pathTilemap.GetTile(pathTilemap.WorldToCell(transform.position)) == null)
                 {
-                    return;
+                    return false;
                 }
             }
+            return true;
+        }
+        
+        private void PlaceTrap()
+        {
+            if (!CanPlaceTrap()) return;
             
+            CursorController.Instance.SetActiveCursorType(CursorType.CanTriggerTrap);
             updateButtonCount?.Invoke(selectedTrap);
             // SpriteRenderer spriteRenderer = currentTrap.GetComponent<SpriteRenderer>();
             SpriteRenderer[] spriteRenderers = currentTrap.GetComponentsInChildren<SpriteRenderer>();
@@ -78,7 +85,6 @@ namespace Prototyping.Scripts.Controllers
             currentTrap = null;
             selectedTrap = null;
             tileCells.Clear();
-
             audioSource.Play();
         }
 
@@ -98,6 +104,14 @@ namespace Prototyping.Scripts.Controllers
         private void Update()
         {
             if (!isPlacingTrap) return;
+
+            bool canPlaceTrap = CanPlaceTrap();
+
+            if (CursorController.Instance.cursorType != CursorType.CanPlaceTrap && canPlaceTrap)
+                CursorController.Instance.SetActiveCursorType(CursorType.CanPlaceTrap);
+
+            if (CursorController.Instance.cursorType != CursorType.GrabbingTrap && !canPlaceTrap)
+                CursorController.Instance.SetActiveCursorType(CursorType.GrabbingTrap);
 
             mousePosition = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
             tilePosition = trapsTilemap.WorldToCell(mousePosition);
@@ -155,6 +169,7 @@ namespace Prototyping.Scripts.Controllers
                 // for(int i = 0; i < gameobject.transform.GetChildCount(); i++)
                 //     Transform Children = gameobject.transform.GetChild(i);
                 // }
+                CursorController.Instance.SetActiveCursorType(CursorType.GrabbingTrap);
                 Transform root = currentTrap.transform.GetChild(1);
                 for (int i = 0; i < root.childCount; i++)
                 {
@@ -163,6 +178,7 @@ namespace Prototyping.Scripts.Controllers
                 selectedTrap = trap;
                 ITrap genericTrap = currentTrap.GetComponentInChildren<ITrap>();
                 if (genericTrap != null) genericTrap.isPlacing = true;
+                
                 // TriggeredTrap triggeredTrap = currentTrap.GetComponentInChildren<TriggeredTrap>();
                 // if (triggeredTrap != null)
                 //     triggeredTrap.isPlacing = true;
@@ -173,6 +189,7 @@ namespace Prototyping.Scripts.Controllers
         public void ClearSelection()
         {
             if (!isPlacingTrap) return;
+            CursorController.Instance.SetActiveCursorType(CursorType.Default);
             currentTrap.transform.position = trapsPosition;
             currentTrap.SetActive(false);
             ITrap genericTrap = currentTrap.GetComponentInChildren<ITrap>();

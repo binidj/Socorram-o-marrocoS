@@ -234,7 +234,7 @@ namespace Prototyping.Scripts.Controllers
         
         private void UpdateAvailableTilesText()
         {
-            var updatedTilesCountTxt = $"Available tiles: {tilesLimit - PathSize}";
+            var updatedTilesCountTxt = $"Tiles Available: {tilesLimit - PathSize}";
             tilesCountTxt.text = updatedTilesCountTxt;
             
             startWaveBtn.interactable = IsPathCompleted();

@@ -416,10 +416,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1595972393}
     - target: {fileID: 592543944247806157, guid: bab760a92d8b699419705c70c8363a66, type: 3}
-      propertyPath: towerMarker
-      value: 
-      objectReference: {fileID: 11400000, guid: 6d1088c1f5cbab3408c25dc142e065f0, type: 2}
-    - target: {fileID: 592543944247806157, guid: bab760a92d8b699419705c70c8363a66, type: 3}
       propertyPath: startWaveBtn
       value: 
       objectReference: {fileID: 976840416}
@@ -2423,7 +2419,7 @@ PrefabInstance:
       objectReference: {fileID: 1908290255}
     - target: {fileID: 4139382805573281423, guid: 78618cf689aaec741bf89d27288644c6, type: 3}
       propertyPath: playerHealth
-      value: 100
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4139382805573281423, guid: 78618cf689aaec741bf89d27288644c6, type: 3}
       propertyPath: victorySound

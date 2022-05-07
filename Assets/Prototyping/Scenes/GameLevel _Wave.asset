@@ -85,5 +85,3 @@ MonoBehaviour:
     timeToWait: 0.5
   - enemy: {fileID: 3404059959204165616, guid: 2dac89dc44c6589458470712e85d53be, type: 3}
     timeToWait: 0.5
-  - enemy: {fileID: 3404059959204165616, guid: 2dac89dc44c6589458470712e85d53be, type: 3}
-    timeToWait: 1000000

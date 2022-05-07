@@ -9,7 +9,6 @@ public class CursorObject : MonoBehaviour
     [SerializeField] private CursorType cursorType;
     private void OnMouseEnter() 
     {
-        Debug.Log("memes");
         CursorController.Instance.SetActiveCursorType(cursorType);
     }
 

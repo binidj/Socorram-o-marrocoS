@@ -31,7 +31,7 @@ namespace Prototyping.Scripts.Controllers
             {
                 
                 Vector3 mousePosition = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
-                RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 15f, LayerMask.GetMask("Traps"));
+                RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 15f, LayerMask.GetMask("PlacedTrap"));
                 
                 if (hit.collider != null && CursorController.Instance.cursorType != CursorType.CanTriggerTrap)
                     CursorController.Instance.SetActiveCursorType(CursorType.CanTriggerTrap);

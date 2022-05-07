@@ -48,6 +48,7 @@ MonoBehaviour:
   startWaveBtn: {fileID: 0}
   pathTileMap: {fileID: 0}
   obstaclesTileMap: {fileID: 0}
+  towersTileMap: {fileID: 0}
   tilesPositions: []
   levelConfig: {fileID: 0}
   trapsController: {fileID: 0}
@@ -73,10 +74,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b54a0f4c19cdee04cb42bc7c67c5d0f5, type: 2}
   ignoreLayers:
   - serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 256
   - serializedVersion: 2
     m_Bits: 132
   squareZone: {fileID: 4431796777201420123, guid: 3d487439e3c576048b45d68075913a96, type: 3}
+  towerMarker: {fileID: 11400000, guid: 6d1088c1f5cbab3408c25dc142e065f0, type: 2}
 --- !u!82 &8067832432419147585
 AudioSource:
   m_ObjectHideFlags: 0

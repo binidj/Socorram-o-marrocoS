@@ -78,11 +78,18 @@ namespace Prototyping.Scripts.Controllers
                 color.a = 1f;
                 spriteRenderer.color = color;
             }
+            
             // spriteRenderer.color = color;
             ITrap genericTrap = currentTrap.GetComponentInChildren<ITrap>();
             if (genericTrap != null) genericTrap.isPlacing = false;
             if (genericTrap is TriggeredTrap)
                 StartCoroutine((genericTrap as TriggeredTrap).EnableTrap());
+            
+            currentTrap.layer = LayerMask.NameToLayer("PlacedTrap");
+            foreach (Transform child in currentTrap.transform)
+            {
+                child.gameObject.layer = LayerMask.NameToLayer("PlacedTrap");
+            }
             currentTrap = null;
             selectedTrap = null;
             tileCells.Clear();

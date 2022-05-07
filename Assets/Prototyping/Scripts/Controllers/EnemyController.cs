@@ -81,7 +81,7 @@ namespace Prototyping.Scripts.Controllers
 
         private bool HasTrapOnPoint(GameObject point)
         {
-            RaycastHit2D hit = Physics2D.Raycast(point.transform.position, Vector2.zero, 15f, LayerMask.GetMask("Traps"));
+            RaycastHit2D hit = Physics2D.Raycast(point.transform.position, Vector2.zero, 15f, LayerMask.GetMask("PlacedTrap"));
             return hit.collider != null && hit.collider.transform.parent.tag != "Respawn";
         }
 

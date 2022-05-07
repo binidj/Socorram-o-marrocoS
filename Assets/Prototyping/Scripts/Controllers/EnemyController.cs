@@ -30,8 +30,8 @@ namespace Prototyping.Scripts.Controllers
         private List<SpriteRenderer> pointsSprites = new List<SpriteRenderer>();
         [SerializeField] GameObject pointTemplate;
         private int pathSize = 0;
-        private Color colorRed = new Color(255, 0, 0);
-        private Color colorGreen = new Color(0, 255, 0);
+        private Color32 colorRed = new Color32(255, 0, 0, 255);
+        private Color32 colorGreen = new Color32(0, 255, 0, 255);
 
         public void UpdateDeathCount()
         {

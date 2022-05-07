@@ -73,6 +73,7 @@ namespace Prototyping.Scripts.Controllers
             SpriteRenderer[] spriteRenderers = currentTrap.GetComponentsInChildren<SpriteRenderer>();
             foreach (var spriteRenderer in spriteRenderers)
             {
+                if (spriteRenderer.gameObject.tag == "Pool") continue;
                 Color color = spriteRenderer.color;
                 color.a = 1f;
                 spriteRenderer.color = color;
@@ -155,6 +156,7 @@ namespace Prototyping.Scripts.Controllers
                     SpriteRenderer[] spriteRenderers = currentTrap.GetComponentsInChildren<SpriteRenderer>();
                     foreach (var spriteRenderer in spriteRenderers)
                     {
+                        if (spriteRenderer.gameObject.tag == "Pool") continue;
                         Color color = spriteRenderer.color;
                         color.a = 0.4f;
                         spriteRenderer.color = color;

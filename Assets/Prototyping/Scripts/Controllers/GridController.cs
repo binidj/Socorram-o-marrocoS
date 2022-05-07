@@ -35,6 +35,8 @@ namespace Prototyping.Scripts.Controllers
         [SerializeField] private GameObject squareZone;
         [SerializeField] Tile towerMarker;
         private bool waveStarted = false;
+        private float placeCooldown = 0.1f;
+        private float cooldownCounter = 0f;
         private int PathSize
         {
             get { 
@@ -141,6 +143,10 @@ namespace Prototyping.Scripts.Controllers
         {
             if (waveStarted) return;
 
+            Debug.Log(cooldownCounter);
+            if (cooldownCounter > 0f)
+                cooldownCounter -= Time.deltaTime;
+
             if (Input.GetMouseButtonUp(0) || Input.GetMouseButton(0))
                 SetTileAtMousePosition();
 
@@ -172,6 +178,7 @@ namespace Prototyping.Scripts.Controllers
 
             if (!CanPlaceTile(tileLocation)) return;
             if (CanCollideWithTower(mousePosition)) return;
+            if (cooldownCounter > 0f) return;
             
             // lineFactory.GetLine(pathTileMap.GetCellCenterWorld(tileLocation), pathTileMap.GetCellCenterWorld(tilesPositions.Last()), 0.02f, new Color(255,0,0,1));
             Tile tile = GetTile(tileLocation);
@@ -190,6 +197,7 @@ namespace Prototyping.Scripts.Controllers
             UpdateAvailableTilesText();
 
             audioSource.Play();
+            cooldownCounter = placeCooldown;
         }
 
         private bool CanCollideWithTower(Vector3 mousePosition)

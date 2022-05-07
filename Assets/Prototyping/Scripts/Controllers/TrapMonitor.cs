@@ -30,18 +30,17 @@ namespace Prototyping.Scripts.Controllers
             if (waveStarted && !trapsController.isPlacingTrap)
             {
                 
+                Vector3 mousePosition = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
+                RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 15f, LayerMask.GetMask("Traps"));
                 
-                // if (hit.collider != null && CursorController.Instance.cursorType != CursorType.CanTriggerTrap)
-                //     CursorController.Instance.SetActiveCursorType(CursorType.CanTriggerTrap);
+                if (hit.collider != null && CursorController.Instance.cursorType != CursorType.CanTriggerTrap)
+                    CursorController.Instance.SetActiveCursorType(CursorType.CanTriggerTrap);
 
-                // if (hit.collider == null && CursorController.Instance.cursorType != CursorType.Default)
-                //     CursorController.Instance.SetActiveCursorType(CursorType.Default);
+                if (hit.collider == null && CursorController.Instance.cursorType != CursorType.Default)
+                    CursorController.Instance.SetActiveCursorType(CursorType.Default);
 
                 if (Input.GetMouseButtonUp(0))
                 {
-                    Vector3 mousePosition = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
-                    RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, 15f, LayerMask.GetMask("Traps"));
-                    
                     if (hit.collider != null)
                     {
                         ITrap trap = hit.collider.gameObject.GetComponentInChildren<ITrap>();

@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cursorType: 3
   textures:
-  - {fileID: 2800000, guid: 1df99b24221d17e448078fd448a9b6bb, type: 3}
-  - {fileID: 2800000, guid: 3f065ac05a1ce34428d9d6f79b38fd13, type: 3}
-  frameRate: 0.1
+  - {fileID: 2800000, guid: aba108c2319fa6b48a67bba293df4df0, type: 3}
+  frameRate: 0.4
   offset: {x: 7, y: 1}

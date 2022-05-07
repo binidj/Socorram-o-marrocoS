@@ -53,13 +53,13 @@ namespace Prototyping.Scripts.Entities
 
         IEnumerator DestroyTrap(GameObject trap)
         {
+            trap.tag = "Respawn";
             foreach (var animator in animators)
             {
                 animator.SetBool("triggerTrap", true);
             }
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
             trap.SetActive(false);
-            trap.tag = "Respawn";
         }
 
         public IEnumerator EnableTrap()

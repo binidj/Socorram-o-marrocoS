@@ -214,6 +214,17 @@ Tilemap:
   m_CorrespondingSourceObject: {fileID: 1143813334651417101, guid: 27fa59ff31835a14c955d17f11344521, type: 3}
   m_PrefabInstance: {fileID: 1143813333663623460}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1629847008 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4139382805573281423, guid: 78618cf689aaec741bf89d27288644c6, type: 3}
+  m_PrefabInstance: {fileID: 3738779494704661093}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eab9c45c949049542a5ba8999ebd107c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1908290255 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5636674421953985841, guid: 712280bc173c2ce4e9a35fbcc5da46a2, type: 3}
@@ -327,6 +338,10 @@ PrefabInstance:
       propertyPath: trapsTilemap
       value: 
       objectReference: {fileID: 4286467921746319786}
+    - target: {fileID: 325998248152745534, guid: 4488c104157f0da409d665fd22a3ff7c, type: 3}
+      propertyPath: enemyController
+      value: 
+      objectReference: {fileID: 1629847008}
     - target: {fileID: 325998248152745535, guid: 4488c104157f0da409d665fd22a3ff7c, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -2414,6 +2429,10 @@ PrefabInstance:
       propertyPath: victorySound
       value: 
       objectReference: {fileID: 8300000, guid: 8dbe46d68d610984e9836479b7254be8, type: 3}
+    - target: {fileID: 4139382805573281423, guid: 78618cf689aaec741bf89d27288644c6, type: 3}
+      propertyPath: pointTemplate
+      value: 
+      objectReference: {fileID: 3460653075159067668, guid: 2bec520719c96a941888b72399e5e6af, type: 3}
     - target: {fileID: 4139382805573281423, guid: 78618cf689aaec741bf89d27288644c6, type: 3}
       propertyPath: gridController
       value: 

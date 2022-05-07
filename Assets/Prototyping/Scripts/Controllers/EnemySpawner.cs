@@ -32,7 +32,7 @@ namespace Prototyping.Scripts.Controllers
             enemies = new List<GameObject>();
             foreach (var enemyData in currentWave.enemies)
             {
-                enemies.Add(Instantiate(enemyData.enemy, transform.position, Quaternion.identity));
+                enemies.Add(Instantiate(enemyData.enemy, transform.position, Quaternion.identity, transform));
             }
         }
 

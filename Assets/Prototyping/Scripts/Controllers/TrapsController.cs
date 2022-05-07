@@ -25,7 +25,7 @@ namespace Prototyping.Scripts.Controllers
         public delegate void UpdateButtonCount(GameObject trap);
         public static event UpdateButtonCount updateButtonCount;
         private AudioSource audioSource;
-        // private readonly Vector3 tileOffset = new Vector3(0.5f, 0.5f, 0);
+        [SerializeField] EnemyController enemyController;
 
         private void Awake()
         {
@@ -86,6 +86,7 @@ namespace Prototyping.Scripts.Controllers
             selectedTrap = null;
             tileCells.Clear();
             audioSource.Play();
+            enemyController.SetActivePoints(false);
         }
 
         private void RotateTrap()
@@ -178,7 +179,7 @@ namespace Prototyping.Scripts.Controllers
                 selectedTrap = trap;
                 ITrap genericTrap = currentTrap.GetComponentInChildren<ITrap>();
                 if (genericTrap != null) genericTrap.isPlacing = true;
-                
+                enemyController.SetActivePoints(true);
                 // TriggeredTrap triggeredTrap = currentTrap.GetComponentInChildren<TriggeredTrap>();
                 // if (triggeredTrap != null)
                 //     triggeredTrap.isPlacing = true;
@@ -197,6 +198,7 @@ namespace Prototyping.Scripts.Controllers
             currentTrap = null;
             selectedTrap = null;
             tileCells.Clear();
+            enemyController.SetActivePoints(false);
         }
     }
 }

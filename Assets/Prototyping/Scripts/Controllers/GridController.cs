@@ -143,7 +143,6 @@ namespace Prototyping.Scripts.Controllers
         {
             if (waveStarted) return;
 
-            Debug.Log(cooldownCounter);
             if (cooldownCounter > 0f)
                 cooldownCounter -= Time.deltaTime;
 
